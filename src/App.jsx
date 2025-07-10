@@ -1,14 +1,14 @@
-
-import './App.css'
-import Home from './pages/Home'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import Home from './pages/Home';
+import Navbar from './components/Navbar';
 
 function App() {
-
   return (
     <div className="App">
-      <Home />
+      <Navbar />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
