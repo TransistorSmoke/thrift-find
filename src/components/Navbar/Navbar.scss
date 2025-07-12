@@ -1,0 +1,41 @@
+@use '../../assets/styles/abstract/variables' as vars;
+@use '../../assets/styles/base/base' as base;
+
+.nav-container {
+  background-color: vars.$primary;
+  padding: base.$base-space;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 300px;
+}
+
+.nav-list-group {
+  list-style: none;
+  display: flex;
+
+  li {
+    padding: calc(base.$base-space/3) base.$base-space;
+    margin: 0 base.$base-space * 0.5;
+    color: vars.$text-light;
+    transition: color 0.25s ease;
+    cursor: pointer;
+
+    &:hover {
+      // color: vars.$emphasis-light-100;
+      color: vars.$emphasis-dark;
+      transition: color 0.25s ease;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

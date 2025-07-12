@@ -1,20 +1,29 @@
-@import './_colours';
+@use './_colours' as colours;
 
 // Primary and secondary colours
-$primary: $jet-black;
-$secondary: $soft-indigo;
+$primary: colours.$soft-indigo;
+$secondary: colours.$pale-lavender;
+
+// Auxiliary colours - placeholder texts etc
+$auxiliary: colours.$fog-grey;
 
 // Emphasis
-$emphasis-dark: $slate-blue;
-$emphasis-light-100: $pale-lavender;
-$emphasis-lighter-200: $light-pastel-violet;
+$emphasis-dark: colours.$slate-blue;
+$emphasis-light-100: colours.$pale-lavender;
+$emphasis-light-200: colours.$light-pastel-violet;
 
 // Core colours
-$dark: $jet-black;
-$light: $very-light-gray;
+$dark: colours.$jet-black;
+$light: colours.$very-light-gray;
 
 // Error coloours
-$error-main: $soft-crimson;
-$error-light: $blush-mist;
+$error-main: colours.$soft-crimson;
+$error-light: colours.$blush-mist;
 
-$bg-light: $very-light-gray;
+// Background colours
+$bg-light: colours.$very-light-gray;
+$bg-dark: colours.$jet-black;
+
+// Text colours
+$text-dark: colours.$jet-black;
+$text-light: colours.$very-light-gray;

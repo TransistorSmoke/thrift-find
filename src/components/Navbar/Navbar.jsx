@@ -1,9 +1,9 @@
-import ThriftFindsLogo from '../assets/images/logo.png';
+import ThriftFindsLogo from '../../assets/images/logo-primary.png';
 import './Navbar.scss';
 
 const Navbar = () => {
   return (
-    <nav className="container">
+    <nav className="nav-container">
       <div className="">
         <img src={ThriftFindsLogo} alt="thrift fine logo" className="logo" />
       </div>
