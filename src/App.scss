@@ -1,3 +1,6 @@
+@use './assets/styles/abstract/variables' as *;
+@use './assets/styles/base/base' as *;
+
 .App {
   min-height: 100vh;
   display: flex;
@@ -6,9 +9,34 @@
 
 main {
   flex: 1;
+  border: 2px solid #555;
 }
 
 .form-section {
   width: 95%;
   margin: 0 auto;
+}
+
+input {
+  border: 1px solid $secondary;
+  padding: 8px 10px;
+  margin: 0 8px 0 4px;
+}
+
+button {
+  width: 175px;
+  padding: $space-md;
+  margin: $space-base auto;
+  background-color: $primary;
+  color: $text-light;
+  border-radius: $space-xs;
+  border: 1px solid $emphasis-light-100;
+  box-shadow: 0 2px 4xpx $emphasis-light-100;
+  transition: background-color 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $emphasis-dark;
+    transition: background-color 0.25s ease;
+  }
 }

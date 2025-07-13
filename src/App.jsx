@@ -14,10 +14,6 @@ function App() {
         <Navbar />
         <main>
           <Routes>
-            {/* <div className="form-section">
-              <Form />
-            </div> */}
-
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

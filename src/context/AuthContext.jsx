@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(user => {});
     unsub();
-  });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ ...state }}>{children}</AuthContext.Provider>

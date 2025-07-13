@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Form.scss';
 import plus from '../../assets/images/icons/plus.svg';
+import { storage } from '../../firebase/config';
 
 const Form = () => {
   const [item, setItem] = useState('');
