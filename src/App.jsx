@@ -3,14 +3,28 @@ import './App.scss';
 import Home from './pages/Home';
 import Navbar from './components/Navbar/Navbar';
 import Form from './components/Form/Form';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <div className="form-section">
-        <Form />
-      </div>
+      <BrowserRouter>
+        <Navbar />
+        <main>
+          <Routes>
+            {/* <div className="form-section">
+              <Form />
+            </div> */}
+
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </main>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

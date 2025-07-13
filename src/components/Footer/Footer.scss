@@ -1,0 +1,19 @@
+@use '../../assets/styles/abstract/variables' as *;
+@use '../../assets/styles/base/base' as *;
+
+footer {
+  border-top: 1px solid $emphasis-dark;
+  height: 80px;
+  background-color: $primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $text-light;
+}
+
+.footer-content {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 $space-md;
+}
