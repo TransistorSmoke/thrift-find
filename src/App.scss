@@ -40,3 +40,10 @@ button {
     transition: background-color 0.25s ease;
   }
 }
+
+.text-error {
+  color: $error-main;
+  margin-top: $space-xs;
+  font-size: 0.9rem;
+  margin: $space-xs auto;
+}

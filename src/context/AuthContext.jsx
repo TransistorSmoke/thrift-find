@@ -5,6 +5,12 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
+    case 'AUTH_IS_READY':
+      return {
+        ...state,
+        user: action.payload,
+        authIsReady: true,
+      };
     default:
       return state;
   }
@@ -13,6 +19,7 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
+    authIsReady: false,
   });
 
   // Checks if user is logged in or not when component mounts
@@ -22,6 +29,8 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
