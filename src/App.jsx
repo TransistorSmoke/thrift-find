@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Footer from './components/Footer/Footer';
 import { useAuthContext } from './hooks/useAuthContext';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -30,6 +31,10 @@ function App() {
               <Route
                 path="/signup"
                 element={user ? <Navigate to="/" /> : <Signup />}
+              />
+              <Route
+                path="/reset-password"
+                element={user ? <Navigate to="/" /> : <ResetPassword />}
               />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

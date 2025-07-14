@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 import { auth, signInWithEmailAndPassword } from '../firebase/config';
+import {
+  FIREBASE_ERROR_CODE_LIST,
+  FIREBASE_ERROR_MAP,
+} from '../utilities/constants';
 
 const useLogin = () => {
   const [isCancelled, setIsCancelled] = useState(false);
@@ -26,25 +30,29 @@ const useLogin = () => {
       setIsPending(false);
     } catch (err) {
       // if (!isCancelled) {
-      //   const e = JSON.parse(err.messsage);
+      // const found = FIREBASE_ERROR_CODE_LIST.includes(err.code);
+      // let message = found
+      //   ? FIREBASE_ERROR_MAP[err.code]
+      //   : 'An error occurred during login. Please try again later.';
 
-      //   if (e.error.message === 'INVALID_LOGIN_CREDENTIALS') {
-      //     setError('Invalid login credentials');
-      //   } else {
-      //     setError(e.error.message);
-      //   }
-      //   setIsPending(false);
+      // if (err.code === 'auth/invalid-credential') {
+      //   message = 'You entered a wrong email or password';
       // }
 
-      console.error('Login error: ', err);
-
-      // const e = JSON.parse(err.message);
-
-      // if (e.error.message === 'INVALID_LOGIN_CREDENTIALS') {
-      //   setError('Invalid login credentials');
-      // } else {
-      //   setError(e.error.message);
+      // setError(message);
+      // setIsPending(false);
       // }
+
+      const found = FIREBASE_ERROR_CODE_LIST.includes(err.code);
+      let message = found
+        ? FIREBASE_ERROR_MAP[err.code]
+        : 'An error occurred during login. Please try again later.';
+
+      if (err.code === 'auth/invalid-credential') {
+        message = 'You entered a wrong email or password';
+      }
+
+      setError(message);
       setIsPending(false);
     }
   };

@@ -10,6 +10,12 @@
   border: 1px solid $secondary;
   box-shadow: 0 2px 6px $emphasis-light;
 
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: $space-base;
+  }
+
   label {
     display: flex;
     flex-direction: column;
@@ -29,5 +35,21 @@
     // border: 1px solid red;
     padding: $space-smd $space-2xs;
     margin: $space-2xs 0;
+  }
+
+  .forgot-password > a {
+    text-decoration: none;
+    color: $emphasis-dark-200;
+    font-weight: 300;
+    font-size: 0.85rem;
+    display: block;
+    margin: $space-lg auto 0 auto;
+    text-align: center;
+    transition: color 0.25s ease;
+
+    &:hover {
+      color: $emphasis-dark;
+      transition: color 0.25s ease;
+    }
   }
 }

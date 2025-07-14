@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useSignup from '../hooks/useSignup';
 import './Signup.scss';
 
-const Signup = () => {
+const ResetPassword = () => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,17 +36,7 @@ const Signup = () => {
   return (
     <>
       <form className="signup" onSubmit={handleSignup}>
-        <h1>Sign up now</h1>
-        <label>
-          <span>Display Name</span>
-          <input
-            type="text"
-            onChange={e => setDisplayName(e.target.value)}
-            placeholder="Display name"
-            name="displayname"
-            id="display-name"
-          />
-        </label>
+        <h1>Reset Password</h1>
         <label>
           <span>Email</span>
           <input
@@ -57,22 +47,14 @@ const Signup = () => {
             id="email"
           />
         </label>
-        <label>
-          <span>Password</span>
-          <input
-            type="password"
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Password"
-            name="password"
-            id="password"
-          />
-        </label>
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
         {error && <p className="text-error">{error}</p>}
-        <button>{!isPending ? 'Signup' : 'Signing up...'}</button>
+        <button>
+          {!isPending ? 'Reset Password' : 'Sending Reset Email...'}
+        </button>
       </form>
     </>
   );
 };
 
-export default Signup;
+export default ResetPassword;

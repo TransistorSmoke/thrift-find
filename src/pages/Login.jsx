@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Login.scss';
 import useLogin from '../hooks/useLogin';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -21,6 +22,7 @@ const Login = () => {
   return (
     <>
       <form className="login" onSubmit={handleLogin}>
+        <h1>Log in</h1>
         <label>
           <span>Email</span>
           <input
@@ -44,6 +46,9 @@ const Login = () => {
         {error && <p className="text-error">{error}</p>}
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
         <button>{!isPending ? 'Login' : 'Logging in...'}</button>
+        <p className="forgot-password">
+          <Link to="/reset-password">Forgot password?</Link>
+        </p>
       </form>
     </>
   );
