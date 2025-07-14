@@ -5,6 +5,18 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
+    case 'LOGIN':
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case 'LOGOUT':
+      return {
+        ...state,
+        user: null,
+      };
+
     case 'AUTH_IS_READY':
       return {
         ...state,
@@ -24,8 +36,10 @@ export const AuthContextProvider = ({ children }) => {
 
   // Checks if user is logged in or not when component mounts
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged(user => {});
-    unsub();
+    const unsub = auth.onAuthStateChanged(user => {
+      dispatch({ type: 'AUTH_IS_READY', payload: user });
+      unsub();
+    });
   }, []);
 
   return (

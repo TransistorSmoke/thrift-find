@@ -6,21 +6,37 @@ import Form from './components/Form/Form';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Footer from './components/Footer/Footer';
+import { useAuthContext } from './hooks/useAuthContext';
 
 function App() {
+  const { authIsReady, user } = useAuthContext();
+  console.log('Auth is ready: ', authIsReady);
+  console.log('App user: ', user);
   return (
     <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </main>
-        <Footer />
-      </BrowserRouter>
+      {authIsReady && (
+        <BrowserRouter>
+          <Navbar />
+          <main>
+            <Routes>
+              <Route
+                path="/"
+                element={user ? <Home /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/login"
+                element={user ? <Navigate to="/" /> : <Login />}
+              />
+              <Route
+                path="/signup"
+                element={user ? <Navigate to="/" /> : <Signup />}
+              />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </main>
+          <Footer />
+        </BrowserRouter>
+      )}
     </div>
   );
 }

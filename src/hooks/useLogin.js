@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from './useAuthContext';
-import { auth } from '../firebase/config';
+import { auth, signInWithEmailAndPassword } from '../firebase/config';
 
 const useLogin = () => {
   const [isCancelled, setIsCancelled] = useState(false);
@@ -13,24 +13,39 @@ const useLogin = () => {
     setIsPending(true);
 
     try {
-      const response = await auth.signInWithEmailAndPassword(email, password);
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Login response: ', response);
 
-      if (!isCancelled) {
-        dispatch({ type: 'LOGIN', payload: response.user });
-        setError(null);
-        setIsPending(false);
-      }
+      // if (!isCancelled) {
+      //   dispatch({ type: 'LOGIN', payload: response.user });
+      //   setError(null);
+      //   setIsPending(false);
+      // }
+      dispatch({ type: 'LOGIN', payload: response.user });
+      setError(null);
+      setIsPending(false);
     } catch (err) {
-      if (!isCancelled) {
-        const e = JSON.parse(err.messsage);
+      // if (!isCancelled) {
+      //   const e = JSON.parse(err.messsage);
 
-        if (e.error.message === 'INVALID_LOGIN_CREDENTIALS') {
-          setError('Invalid login credentials');
-        } else {
-          setError(e.error.message);
-        }
-        setIsPending(false);
-      }
+      //   if (e.error.message === 'INVALID_LOGIN_CREDENTIALS') {
+      //     setError('Invalid login credentials');
+      //   } else {
+      //     setError(e.error.message);
+      //   }
+      //   setIsPending(false);
+      // }
+
+      console.error('Login error: ', err);
+
+      // const e = JSON.parse(err.message);
+
+      // if (e.error.message === 'INVALID_LOGIN_CREDENTIALS') {
+      //   setError('Invalid login credentials');
+      // } else {
+      //   setError(e.error.message);
+      // }
+      setIsPending(false);
     }
   };
 

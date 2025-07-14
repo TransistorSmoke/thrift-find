@@ -30,8 +30,9 @@ button {
   background-color: $primary;
   color: $text-light;
   border-radius: $space-xs;
-  border: 1px solid $emphasis-light-100;
-  box-shadow: 0 2px 4xpx $emphasis-light-100;
+  border: 1px solid $emphasis-light;
+  -webkit-box-shadow: 1px 4px 4xpx -1px rgba(17, 17, 17, 0.23);
+  box-shadow: 1px 4px 4px -1px rgba(17, 17, 17, 0.23);
   transition: background-color 0.25s ease;
   cursor: pointer;
 

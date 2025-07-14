@@ -1,13 +1,13 @@
-@use '../../assets/styles/abstract/variables' as vars;
-@use '../../assets/styles/base/base' as base;
+@use '../../assets/styles/abstract/variables' as *;
+@use '../../assets/styles/base/base' as *;
 
 .nav-container {
-  background-color: vars.$primary;
-  padding: base.$base-space;
+  background-color: $primary;
+  padding: $base-space;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid vars.$emphasis-dark;
+  border-bottom: 1px solid $emphasis-dark;
 }
 
 .logo {
@@ -19,16 +19,19 @@
   display: flex;
 
   li {
-    padding: calc(base.$base-space/3) base.$base-space;
-    margin: 0 base.$base-space * 0.5;
-    color: vars.$text-light;
-    transition: color 0.25s ease;
-    cursor: pointer;
+    padding: calc($base-space/3) $base-space;
+    margin: 0 $base-space * 0.5;
 
-    &:hover {
-      // color: vars.$emphasis-light-100;
-      color: vars.$emphasis-dark;
+    a {
+      text-decoration: none;
+      color: $text-light;
       transition: color 0.25s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: $emphasis-dark;
+        transition: color 0.25s ease;
+      }
     }
 
     &:first-child {
@@ -37,6 +40,28 @@
 
     &:last-child {
       margin-right: 0;
+    }
+  }
+
+  .greeting {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      margin-right: $space-3xl;
+      color: $text-light;
+      font-size: 1.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    button {
+      background-color: $emphasis-dark;
+
+      &:hover {
+        background-color: #4c4aba;
+      }
     }
   }
 }

@@ -10,10 +10,6 @@ const Login = () => {
 
   const handleLogin = e => {
     e.preventDefault();
-    console.log('logging in...');
-
-    console.log('email: ', email);
-    console.log('password: ', password);
 
     if (email === '' || password === '') {
       setInputFieldErrors('Please input your email and/or password');
@@ -45,8 +41,9 @@ const Login = () => {
             id="password"
           />
         </label>
+        {error && <p className="text-error">{error}</p>}
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
-        <button>Login</button>
+        <button>{!isPending ? 'Login' : 'Logging in...'}</button>
       </form>
     </>
   );
