@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Form.scss';
 import plus from '../../assets/images/icons/plus.svg';
 import useFirestore from '../../hooks/useFirestore';
@@ -12,6 +12,7 @@ const Form = ({ uid }) => {
   const [fileError, setFileError] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const { addDocument, response, fsTransactionIsPending } = useFirestore('items');
 
   const handleAddItem = async e => {
@@ -20,6 +21,11 @@ const Form = ({ uid }) => {
     console.log('Item: ', item);
     console.log('Price:', parseFloat(price).toFixed(2));
     console.log('Purchase date: ', purchaseDate);
+    console.log('image: ', image);
+
+    clearAll();
+
+    return;
 
     if (item?.trim() === '' || price <= 0 || purchaseDate === '') {
       //   console.error('Please fill in all fields correctly.');
@@ -47,32 +53,58 @@ const Form = ({ uid }) => {
 
   const handleFileChange = async e => {
     setImage(null);
-    const file = e.target.files[0];
+    setFileError(null);
+    let file = e.target.files[0];
+    let filePreviewUrl = null;
 
     if (!file || !file.type.includes('image')) {
       setFileError('Please select an image file.');
       return;
     }
 
-    if (file.size > 20000000) {
-      setFileError('File size exceeds limit. Please select a smaller image.');
-      return;
+    if (file.size > 500000) {
+      try {
+        const { compressedFile, previewURL } = await compressImage(file);
+        file = compressedFile;
+        filePreviewUrl = previewURL;
+      } catch (err) {
+        setFileError(err.message || 'Image compression failed');
+      }
     }
 
-    console.log('Selected file: ', file);
-
-    try {
-      const compressed = await compressImage(file);
-      setImage(compressed);
-      console.log('this is the compressed file: ', compressed);
-    } catch (err) {
-      setFileError(err.message || 'Image compression failed');
+    setImage(file);
+    if (filePreviewUrl) {
+      setPreviewUrl(filePreviewUrl);
     }
   };
 
   const clearError = () => {
     if (error) setError(null);
+    if (fileError) setFileError(null);
   };
+
+  const clearAll = () => {
+    setItem('');
+    setPrice(0);
+    setPurchaseDate('');
+    setImage(null);
+    setFileError(null);
+    setError(null);
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+    }
+  };
+
+  // Revoke preview URL during unmount to prevent memory leak
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        setPreviewUrl(null);
+      }
+    };
+  }, [previewUrl]);
 
   return (
     <div className="form-container">
@@ -114,7 +146,7 @@ const Form = ({ uid }) => {
         </label>
         <label>
           <span>Image: </span>
-          <input type="file" name="file-item" accept="image/*" onChange={handleFileChange} />
+          <input type="file" name="file-item" accept="image/*" onChange={handleFileChange} onFocus={clearError} />
         </label>
         <button className="submit">
           <img src={plus} alt="add icon" className="add" />
