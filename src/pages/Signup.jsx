@@ -18,16 +18,9 @@ const Signup = () => {
     console.log('password: ', password);
 
     if (displayName === '' || email === '' || password === '') {
-      setInputFieldErrors(
-        'Please input your display name, email and/or password'
-      );
+      setInputFieldErrors('Please input your display name, email and/or password');
     } else {
-      console.log(
-        'signing up with displayname, email, password: ',
-        displayName,
-        email,
-        password
-      );
+      console.log('signing up with displayname, email, password: ', displayName, email, password);
 
       signup(email, password, displayName);
     }
@@ -49,13 +42,7 @@ const Signup = () => {
         </label>
         <label>
           <span>Email</span>
-          <input
-            type="email"
-            onChange={e => setEmail(e.target.value)}
-            placeholder="Email"
-            name="email"
-            id="email"
-          />
+          <input type="email" onChange={e => setEmail(e.target.value)} placeholder="Email" name="email" id="email" />
         </label>
         <label>
           <span>Password</span>

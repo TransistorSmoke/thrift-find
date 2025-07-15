@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from '../firebase/config';
+import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase/config';
 import { useAuthContext } from './useAuthContext';
 
 const useSignup = () => {
@@ -20,11 +16,7 @@ const useSignup = () => {
 
     console.log('Logged email from the hook: ', email);
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const response = await createUserWithEmailAndPassword(auth, email, password);
 
       console.log('Signup response: ', response);
 

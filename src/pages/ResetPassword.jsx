@@ -18,16 +18,9 @@ const ResetPassword = () => {
     console.log('password: ', password);
 
     if (displayName === '' || email === '' || password === '') {
-      setInputFieldErrors(
-        'Please input your display name, email and/or password'
-      );
+      setInputFieldErrors('Please input your display name, email and/or password');
     } else {
-      console.log(
-        'signing up with displayname, email, password: ',
-        displayName,
-        email,
-        password
-      );
+      console.log('signing up with displayname, email, password: ', displayName, email, password);
 
       signup(email, password, displayName);
     }
@@ -39,19 +32,11 @@ const ResetPassword = () => {
         <h1>Reset Password</h1>
         <label>
           <span>Email</span>
-          <input
-            type="email"
-            onChange={e => setEmail(e.target.value)}
-            placeholder="Email"
-            name="email"
-            id="email"
-          />
+          <input type="email" onChange={e => setEmail(e.target.value)} placeholder="Email" name="email" id="email" />
         </label>
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
         {error && <p className="text-error">{error}</p>}
-        <button>
-          {!isPending ? 'Reset Password' : 'Sending Reset Email...'}
-        </button>
+        <button>{!isPending ? 'Reset Password' : 'Sending Reset Email...'}</button>
       </form>
     </>
   );

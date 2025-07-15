@@ -28,3 +28,6 @@ dist-ssr
 palette.txt
 .prettierrc
 .prettierignore
+firestore.rules
+storage.rules
+.firebase

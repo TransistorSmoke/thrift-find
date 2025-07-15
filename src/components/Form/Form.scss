@@ -17,6 +17,7 @@
 .form-add {
   border: 1px solid $emphasis-light;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
@@ -25,10 +26,10 @@
   background-color: $light;
 
   label {
-    flex: 1;
     margin: 0 4px;
     padding: 0 4px;
     display: flex;
+    flex: 1;
     justify-content: space-around;
     align-items: center;
     font-weight: 600;
@@ -110,5 +111,17 @@
       height: 16px;
       margin-right: 6px;
     }
+  }
+
+  label,
+  .error {
+    width: 100%;
+  }
+
+  .error {
+    text-align: center;
+    color: $error-main;
+    font-size: 0.9rem;
+    // margin-top: $space-xs;
   }
 }

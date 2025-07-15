@@ -10,24 +10,19 @@ export const FIREBASE_ERROR_MAP = {
 
   // Password Errors
   'auth/wrong-password': 'Incorrect password',
-  'auth/weak-password':
-    "Password doesn't meet strength requirements (usually <6 characters)",
-  'auth/too-many-requests':
-    'Temporarily blocked due to too many failed login attempts',
+  'auth/weak-password': "Password doesn't meet strength requirements (usually <6 characters)",
+  'auth/too-many-requests': 'Temporarily blocked due to too many failed login attempts',
 
   // Credential & Sign-In Errors
   'auth/invalid-credential': 'Provided credential is malformed or expired',
-  'auth/operation-not-allowed':
-    'Sign-in method (e.g., Google, Email) is not enabled in Firebase console',
+  'auth/operation-not-allowed': 'Sign-in method (e.g., Google, Email) is not enabled in Firebase console',
   'auth/popup-closed-by-user': 'User closed the popup before completing auth',
   'auth/cancelled-popup-request': 'Only one popup allowed at a time',
   'auth/popup-blocked': 'Popup blocked by browser settings',
-  'auth/unauthorized-domain':
-    'Your domain isn’t listed in Firebase Auth’s list of authorized domains',
+  'auth/unauthorized-domain': 'Your domain isn’t listed in Firebase Auth’s list of authorized domains',
 
   // Custom Auth & Token Errors
-  'auth/invalid-custom-token':
-    'Token is incorrectly formatted or missing claims',
+  'auth/invalid-custom-token': 'Token is incorrectly formatted or missing claims',
   'auth/custom-token-mismatch': "Token doesn't match current project",
   'auth/id-token-expired': 'ID token has expired',
   'auth/id-token-revoked': 'Token was revoked via Admin SDK',
