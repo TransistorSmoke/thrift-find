@@ -9,7 +9,7 @@ import {
   updateProfile,
   signOut,
 } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
+import { getStorage, uploadBytes, ref } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -41,4 +41,6 @@ export {
   signOut,
   db,
   storage,
+  uploadBytes,
+  ref,
 };

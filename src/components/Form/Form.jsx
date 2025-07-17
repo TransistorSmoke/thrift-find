@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './Form.scss';
 import plus from '../../assets/images/icons/plus.svg';
 import useFirestore from '../../hooks/useFirestore';
 import compressImage from '../../utilities/utilities';
+import { storage, timestamp, uploadBytes, ref } from '../../firebase/config';
+import { getDownloadURL } from 'firebase/storage';
 
 const Form = ({ uid }) => {
   const [item, setItem] = useState('');
@@ -13,6 +15,8 @@ const Form = ({ uid }) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [isCompressed, setIsCompressed] = useState(false);
+  const fileInputRef = useRef(null);
   const { addDocument, response, fsTransactionIsPending } = useFirestore('items');
 
   const handleAddItem = async e => {
@@ -23,9 +27,9 @@ const Form = ({ uid }) => {
     console.log('Purchase date: ', purchaseDate);
     console.log('image: ', image);
 
-    clearAll();
+    // clearAll();
 
-    return;
+    // return;
 
     if (item?.trim() === '' || price <= 0 || purchaseDate === '') {
       //   console.error('Please fill in all fields correctly.');
@@ -33,11 +37,21 @@ const Form = ({ uid }) => {
       return;
     } else {
       try {
+        let imageUrl = '';
+        console.log('This is the image: ', image);
+        if (image) {
+          const imageRef = ref(storage, `posts/${image.name}-${timestamp}`);
+          await uploadBytes(imageRef, image);
+          imageUrl = await getDownloadURL(imageRef);
+          console.log('image url: ', imageUrl);
+        }
+
         await addDocument({
           uid,
           item,
           price: parseFloat(price).toFixed(2),
           purchaseDate,
+          imageUrl,
         });
         console.log('reponse: ', response);
 
@@ -67,6 +81,7 @@ const Form = ({ uid }) => {
         const { compressedFile, previewURL } = await compressImage(file);
         file = compressedFile;
         filePreviewUrl = previewURL;
+        setIsCompressed(true);
       } catch (err) {
         setFileError(err.message || 'Image compression failed');
       }
@@ -90,20 +105,26 @@ const Form = ({ uid }) => {
     setImage(null);
     setFileError(null);
     setError(null);
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
+    clearPreviewUrl(previewUrl);
+    // if (previewUrl) {
+    //   URL.revokeObjectURL(previewUrl);
+    //   setPreviewUrl(null);
+    // }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const clearPreviewUrl = url => {
+    if (url) {
+      URL.revokeObjectURL(url);
       setPreviewUrl(null);
     }
   };
 
   // Revoke preview URL during unmount to prevent memory leak
   useEffect(() => {
-    return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-        setPreviewUrl(null);
-      }
-    };
+    return () => clearPreviewUrl(previewUrl);
   }, [previewUrl]);
 
   return (
@@ -146,7 +167,14 @@ const Form = ({ uid }) => {
         </label>
         <label>
           <span>Image: </span>
-          <input type="file" name="file-item" accept="image/*" onChange={handleFileChange} onFocus={clearError} />
+          <input
+            type="file"
+            name="file-item"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            onFocus={clearError}
+          />
         </label>
         <button className="submit">
           <img src={plus} alt="add icon" className="add" />
