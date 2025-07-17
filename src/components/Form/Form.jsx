@@ -5,6 +5,7 @@ import useFirestore from '../../hooks/useFirestore';
 import compressImage from '../../utilities/utilities';
 import { storage, timestamp, uploadBytes, ref } from '../../firebase/config';
 import { getDownloadURL } from 'firebase/storage';
+import Spinner from '../Spinner/Spinner';
 
 const Form = ({ uid }) => {
   const [item, setItem] = useState('');
@@ -21,13 +22,6 @@ const Form = ({ uid }) => {
 
   const handleAddItem = async e => {
     e.preventDefault();
-    console.log('Adding item...');
-    console.log('Item: ', item);
-    console.log('Price:', parseFloat(price).toFixed(2));
-    console.log('Purchase date: ', purchaseDate);
-    console.log('image: ', image);
-
-    // clearAll();
 
     // return;
 
@@ -54,11 +48,7 @@ const Form = ({ uid }) => {
           imageUrl,
         });
         console.log('reponse: ', response);
-
-        setItem('');
-        setPrice(0);
-        setPurchaseDate('');
-        setError(null);
+        clearAll();
       } catch (err) {
         console.error('Error adding item: ', err);
       }
@@ -177,7 +167,11 @@ const Form = ({ uid }) => {
           />
         </label>
         <button className="submit">
-          <img src={plus} alt="add icon" className="add" />
+          {fsTransactionIsPending ? (
+            <Spinner size={16} color="transparent" />
+          ) : (
+            <img src={plus} alt="add icon" className="add" />
+          )}
           Add
         </button>
         {error && <p className="error">{error}</p>}

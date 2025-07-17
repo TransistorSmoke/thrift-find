@@ -1,0 +1,13 @@
+.spinner {
+  border: 2px solid #fff;
+  border-top: 2px solid #fff; /* default, can be overridden by inline style */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
