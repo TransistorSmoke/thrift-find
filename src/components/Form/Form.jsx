@@ -2,10 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import './Form.scss';
 import plus from '../../assets/images/icons/plus.svg';
 import useFirestore from '../../hooks/useFirestore';
-import compressImage from '../../utilities/utilities';
+import { compressImage, transformFieldName, deleteToastSettings as settings } from '../../utilities/utilities';
 import { storage, timestamp, uploadBytes, ref } from '../../firebase/config';
 import { getDownloadURL } from 'firebase/storage';
 import Spinner from '../Spinner/Spinner';
+import { toast } from 'react-toastify';
 
 const Form = ({ uid }) => {
   const [item, setItem] = useState('');
@@ -13,33 +14,35 @@ const Form = ({ uid }) => {
   const [purchaseDate, setPurchaseDate] = useState('');
   const [image, setImage] = useState(null);
   const [fileError, setFileError] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [addDocIsPending, setAddDocIsPending] = useState(false);
   const [error, setError] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [isCompressed, setIsCompressed] = useState(false);
   const fileInputRef = useRef(null);
-  const { addDocument, response, fsTransactionIsPending } = useFirestore('items');
+  const { addDocument } = useFirestore('items');
 
   const handleAddItem = async e => {
     e.preventDefault();
+    setAddDocIsPending(true);
+    const fields = { item, price, purchaseDate, image };
 
-    // return;
+    if (item?.trim() === '' || price <= 0 || purchaseDate === '' || !image) {
+      const emptyFields = await Object.entries(fields)
+        .filter(([_, value]) => !value)
+        .map(([key]) => transformFieldName(key));
 
-    if (item?.trim() === '' || price <= 0 || purchaseDate === '') {
-      //   console.error('Please fill in all fields correctly.');
-      setError('Please fill in all fields correctly.');
+      setError(`Please fill in the following fields: ${emptyFields.join(', ')}`);
+      setAddDocIsPending(false);
       return;
     } else {
       try {
         let imageUrl = '';
-        console.log('This is the image: ', image);
         if (image) {
           const imageRef = ref(storage, `posts/${image.name}-${timestamp}`);
           await uploadBytes(imageRef, image);
           imageUrl = await getDownloadURL(imageRef);
-          console.log('image url: ', imageUrl);
         }
 
+        clearError();
         await addDocument({
           uid,
           item,
@@ -47,11 +50,15 @@ const Form = ({ uid }) => {
           purchaseDate,
           imageUrl,
         });
-        console.log('reponse: ', response);
+        toast.success('Item successfully added', settings);
+
         clearAll();
       } catch (err) {
-        console.error('Error adding item: ', err);
+        toast.error('Failed to add item', settings);
+        setError('Faile to add item');
       }
+
+      setAddDocIsPending(false);
     }
   };
 
@@ -71,11 +78,12 @@ const Form = ({ uid }) => {
         const { compressedFile, previewURL } = await compressImage(file);
         file = compressedFile;
         filePreviewUrl = previewURL;
-        setIsCompressed(true);
       } catch (err) {
         setFileError(err.message || 'Image compression failed');
       }
     }
+
+    console.log('File: ', file);
 
     setImage(file);
     if (filePreviewUrl) {
@@ -167,12 +175,12 @@ const Form = ({ uid }) => {
           />
         </label>
         <button className="submit">
-          {fsTransactionIsPending ? (
+          {addDocIsPending ? (
             <Spinner size={16} color="transparent" />
           ) : (
             <img src={plus} alt="add icon" className="add" />
           )}
-          Add
+          {addDocIsPending ? 'Adding' : 'Add'}
         </button>
         {error && <p className="error">{error}</p>}
         {fileError && <p className="error">{fileError}</p>}

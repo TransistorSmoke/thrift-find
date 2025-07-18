@@ -7,6 +7,8 @@ import Signup from './pages/Signup';
 import Footer from './components/Footer/Footer';
 import { useAuthContext } from './hooks/useAuthContext';
 import ResetPassword from './pages/ResetPassword';
+import { ToastContainer, Bounce, toast } from 'react-toastify';
+import { deleteToastSettings as settings } from './utilities/utilities';
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -27,6 +29,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       )}
+      <ToastContainer transition={Bounce} />
     </div>
   );
 }
