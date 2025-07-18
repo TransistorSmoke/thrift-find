@@ -1,15 +1,12 @@
 import './Inventory.scss';
 
 const ItemTable = ({ items }) => {
-  console.log('Items in inventory: ', items);
-
   if (!Array.isArray(items)) {
     return <div className="table-container">Loading inventory...</div>;
   }
 
   return (
     <div>
-      {/* <h1 className="inventory-title">Inventory</h1> */}
       <div className="table-container" tabIndex="0">
         <table className="table-main">
           <caption>Inventory</caption>
@@ -20,6 +17,7 @@ const ItemTable = ({ items }) => {
               <th>Date Purchased</th>
               <th>Selling Price</th>
               <th>Date Sold</th>
+              <th>Profit</th>
               <th>options here</th>
             </tr>
           </thead>
@@ -33,12 +31,15 @@ const ItemTable = ({ items }) => {
             ) : (
               items.map(item => (
                 <tr key={item.id}>
-                  <td>{item && item.item ? item.item : '-'}</td>
-                  <td>{item && item.price ? item.price : '-'}</td>
-                  <td>{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
-                  <td>{item && item.sellPrice ? item.sellPrice : '-'}</td>
-                  <td>{item && item.sellDate ? item.sellDate : '-'}</td>
-                  <td>OPTIONS HERE - edit/delete</td>
+                  <td className="item">{item && item.item ? item.item : '-'}</td>
+                  <td className="price">{item && item.price ? item.price : '-'}</td>
+                  <td className="purchase-date">{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
+                  <td className="selling-price">{item && item.sellPrice ? item.sellPrice : '-'}</td>
+                  <td className="sell-date">{item && item.sellDate ? item.sellDate : '-'}</td>
+                  <td className="profit">
+                    {item && item.price && item.sellPrice ? (+item.sellPrice - +item.price).toFixed(2) : '-'}
+                  </td>
+                  <td className="options">OPTIONS HERE - edit/delete</td>
                 </tr>
               ))
             )}

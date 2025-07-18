@@ -34,3 +34,8 @@ export const deleteToastSettings = {
   progress: 0,
   theme: 'dark',
 };
+
+export const calculateProfit = (buy, sell) => {
+  console.log('buy, sell: ', buy, sell);
+  return parseFloat(buy) && parseFloat(sell) ? sell - buy : '-';
+};
