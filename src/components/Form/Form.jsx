@@ -13,6 +13,7 @@ const Form = ({ uid }) => {
   const [price, setPrice] = useState(0);
   const [purchaseDate, setPurchaseDate] = useState('');
   const [image, setImage] = useState(null);
+  const [imgIsCompressing, setImgIsCompressing] = useState(false);
   const [fileError, setFileError] = useState(null);
   const [addDocIsPending, setAddDocIsPending] = useState(false);
   const [error, setError] = useState(null);
@@ -65,6 +66,7 @@ const Form = ({ uid }) => {
   const handleFileChange = async e => {
     setImage(null);
     setFileError(null);
+    setImgIsCompressing(false);
     let file = e.target.files[0];
     let filePreviewUrl = null;
 
@@ -75,9 +77,11 @@ const Form = ({ uid }) => {
 
     if (file.size > 500000) {
       try {
+        setImgIsCompressing(true);
         const { compressedFile, previewURL } = await compressImage(file);
         file = compressedFile;
         filePreviewUrl = previewURL;
+        setImgIsCompressing(false);
       } catch (err) {
         setFileError(err.message || 'Image compression failed');
       }
@@ -174,7 +178,7 @@ const Form = ({ uid }) => {
             onFocus={clearError}
           />
         </label>
-        <button className="submit">
+        <button className="submit" disabled={imgIsCompressing}>
           {addDocIsPending ? (
             <Spinner size={16} color="transparent" />
           ) : (

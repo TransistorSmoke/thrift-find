@@ -1,6 +1,12 @@
 import './Inventory.scss';
 
-const ItemTable = ({ items = null }) => {
+const ItemTable = ({ items }) => {
+  console.log('Items in inventory: ', items);
+
+  if (!Array.isArray(items)) {
+    return <div className="table-container">Loading inventory...</div>;
+  }
+
   return (
     <div>
       {/* <h1 className="inventory-title">Inventory</h1> */}
@@ -16,16 +22,27 @@ const ItemTable = ({ items = null }) => {
               <th>Date Sold</th>
               <th>options here</th>
             </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            {items && items.length === 0 ? (
+              <tr>
+                <td colSpan={6} style={{ textAlign: 'center' }}>
+                  No items found.
+                </td>
+              </tr>
+            ) : (
+              items.map(item => (
+                <tr key={item.id}>
+                  <td>{item && item.item ? item.item : '-'}</td>
+                  <td>{item && item.price ? item.price : '-'}</td>
+                  <td>{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
+                  <td>{item && item.sellPrice ? item.sellPrice : '-'}</td>
+                  <td>{item && item.sellDate ? item.sellDate : '-'}</td>
+                  <td>OPTIONS HERE - edit/delete</td>
+                </tr>
+              ))
+            )}
+          </tbody>
         </table>
       </div>
     </div>

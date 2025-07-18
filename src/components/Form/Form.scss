@@ -41,17 +41,14 @@
   }
 
   input {
-    // border: 1px solid $secondary;
-    // padding: 8px 10px;
-    // margin: 0 8px 0 4px;
     border-radius: $space-xs;
     flex: 1;
     font-weight: 400;
 
     &:focus {
       outline: none;
-      border-color: $emphasis-light; /* your primary color */
-      box-shadow: 0 0 0 2px $emphasis-light-200; /* soft glow */
+      border-color: $emphasis-light;
+      box-shadow: 0 0 0 2px $emphasis-light-200;
     }
 
     &::placeholder,
@@ -91,7 +88,7 @@
     justify-content: center;
     align-items: center;
     background-color: $primary;
-    width: 120px;
+    width: 130px;
     padding: 10px 16px;
     margin: 10px 10px 10px 16px;
     color: $text-light;
@@ -110,6 +107,11 @@
       width: 16px;
       height: 16px;
       margin-right: 6px;
+    }
+
+    &:disabled {
+      background-color: $disabled;
+      cursor: not-allowed;
     }
   }
 

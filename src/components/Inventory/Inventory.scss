@@ -1,5 +1,4 @@
-.inventory-title {
-}
+@use '../../assets/styles/abstract/variables' as *;
 
 .table-container {
   overflow: auto;
@@ -32,11 +31,23 @@
       font-weight: 500;
     }
 
-    td {
-      border: 1px solid #dededf;
-      background-color: #f8f8f8;
-      color: #ccc;
-      padding: 5px;
+    tbody {
+      td {
+        border: 1px solid #dededf;
+        background-color: #f8f8f8;
+        color: $text-dark;
+        padding: 5px;
+        font-size: 0.95rem;
+        padding: 12px;
+      }
+
+      td:nth-child(n + 2) {
+        text-align: center;
+      }
+
+      tr:hover td {
+        background-color: $emphasis-light-200;
+      }
     }
   }
 }
