@@ -1,6 +1,10 @@
 import './Inventory.scss';
 
 const ItemTable = ({ items }) => {
+  const showItemInfo = () => {
+    console.log('Showing item info:');
+  };
+
   if (!Array.isArray(items)) {
     return <div className="table-container">Loading inventory...</div>;
   }
@@ -13,12 +17,12 @@ const ItemTable = ({ items }) => {
           <thead>
             <tr>
               <th>Item Name</th>
-              <th>Purchasing Price</th>
+              <th>Purchasing Price (AUD)</th>
               <th>Date Purchased</th>
-              <th>Selling Price</th>
+              <th>Selling Price (AUD)</th>
               <th>Date Sold</th>
               <th>Profit</th>
-              <th>options here</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -30,7 +34,7 @@ const ItemTable = ({ items }) => {
               </tr>
             ) : (
               items.map(item => (
-                <tr key={item.id}>
+                <tr key={item.id} onClick={showItemInfo}>
                   <td className="item">{item && item.item ? item.item : '-'}</td>
                   <td className="price">{item && item.price ? item.price : '-'}</td>
                   <td className="purchase-date">{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
@@ -39,7 +43,21 @@ const ItemTable = ({ items }) => {
                   <td className="profit">
                     {item && item.price && item.sellPrice ? (+item.sellPrice - +item.price).toFixed(2) : '-'}
                   </td>
-                  <td className="options">OPTIONS HERE - edit/delete</td>
+                  <td className="options">
+                    {/* <span className="view">Details</span>
+                    <span className="edit">Edit</span>
+                    <span className="delete">Delete</span> */}
+
+                    <span title="Edit">
+                      <i class="fas fa-pen"></i>
+                    </span>
+                    <span title="Delete">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                    <span title="View">
+                      <i class="fas fa-eye"></i>
+                    </span>
+                  </td>
                 </tr>
               ))
             )}
