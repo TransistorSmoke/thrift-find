@@ -1,0 +1,42 @@
+.inventory-title {
+}
+
+.table-container {
+  overflow: auto;
+  width: 100%;
+
+  .table-main {
+    border: 1px solid #dededf;
+    height: 100%;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 1px;
+    text-align: left;
+
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 1.7rem;
+      margin-bottom: 4px;
+    }
+
+    th {
+      border: 1px solid #dededf;
+      background-color: #6462f0;
+      color: #f8f8f8;
+      padding: 5px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    td {
+      border: 1px solid #dededf;
+      background-color: #f8f8f8;
+      color: #ccc;
+      padding: 5px;
+    }
+  }
+}
