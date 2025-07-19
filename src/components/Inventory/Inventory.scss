@@ -31,11 +31,11 @@
       font-weight: 500;
 
       &:first-child {
-        width: 24%;
+        width: 20%;
       }
 
       &:last-child {
-        width: 10%;
+        width: 8%;
       }
 
       &:not(:first-child):not(:last-child) {
@@ -50,24 +50,70 @@
         color: $text-dark;
         padding: 5px;
         font-size: 0.95rem;
-        padding: 12px;
+        padding: 4px 6px;
       }
 
       td:nth-child(n + 2) {
         text-align: center;
       }
 
-      // tr:hover td {
-      //   background-color: white;
-      // }
+      tr:hover td {
+        background-color: white;
+      }
     }
 
     .options {
       font-size: 0.9rem;
-      span {
-        border-radius: $space-xs;
-        margin: 0 $space-xs;
-        padding: $space-2xs $space-md;
+
+      .icons-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          margin: 0 $space-xs;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 2px solid transparent;
+
+          &:hover {
+            border-radius: 50%;
+            border: 2px solid $emphasis-light;
+          }
+
+          .fas {
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-size: 0.9rem;
+          }
+
+          &.view {
+            color: $primary;
+
+            &:hover {
+              color: $disabled;
+            }
+          }
+          &.edit {
+            color: $dark;
+
+            &:hover {
+              color: $disabled;
+            }
+          }
+          &.delete {
+            color: $delete;
+
+            &:hover {
+              color: $disabled;
+            }
+          }
+        }
       }
     }
   }

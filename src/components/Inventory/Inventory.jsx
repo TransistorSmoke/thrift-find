@@ -44,19 +44,17 @@ const ItemTable = ({ items }) => {
                     {item && item.price && item.sellPrice ? (+item.sellPrice - +item.price).toFixed(2) : '-'}
                   </td>
                   <td className="options">
-                    {/* <span className="view">Details</span>
-                    <span className="edit">Edit</span>
-                    <span className="delete">Delete</span> */}
-
-                    <span title="Edit">
-                      <i class="fas fa-pen"></i>
-                    </span>
-                    <span title="Delete">
-                      <i class="fas fa-trash"></i>
-                    </span>
-                    <span title="View">
-                      <i class="fas fa-eye"></i>
-                    </span>
+                    <div className="icons-container">
+                      <span className="view">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                      <span className="edit">
+                        <i class="fas fa-pen"></i>
+                      </span>
+                      <span className="delete">
+                        <i class="fas fa-trash"></i>
+                      </span>
+                    </div>
                   </td>
                 </tr>
               ))
