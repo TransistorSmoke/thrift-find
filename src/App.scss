@@ -39,6 +39,15 @@ button {
     background-color: $emphasis-dark;
     transition: background-color 0.25s ease;
   }
+
+  &.close {
+    background-color: $dark;
+    border: none;
+
+    &:hover {
+      background-color: $disabled;
+    }
+  }
 }
 
 .text-error {

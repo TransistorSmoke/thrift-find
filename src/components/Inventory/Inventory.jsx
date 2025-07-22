@@ -1,8 +1,28 @@
 import './Inventory.scss';
+import { useState, useRef } from 'react';
+
+import ItemModal from '../ItemModal/ItemModal';
 
 const ItemTable = ({ items }) => {
-  const showItemInfo = () => {
-    console.log('Showing item info:');
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [canEditContent, setCanEditContent] = useState(false);
+
+  const dialog = useRef();
+
+  // Temporary field names value during row edit
+
+  const [cellToEdit, setCellToEdit] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+
+  const showItemInfo = item => {
+    setSelectedItem(item);
+    dialog.current?.showModal();
+  };
+
+  const handleClose = () => {
+    setSelectedItem(null);
+    dialog.current?.close();
   };
 
   if (!Array.isArray(items)) {
@@ -10,7 +30,8 @@ const ItemTable = ({ items }) => {
   }
 
   return (
-    <div>
+    <>
+      <ItemModal ref={dialog} item={selectedItem} onClose={handleClose} />
       <div className="table-container" tabIndex="0">
         <table className="table-main">
           <caption>Inventory</caption>
@@ -34,7 +55,7 @@ const ItemTable = ({ items }) => {
               </tr>
             ) : (
               items.map(item => (
-                <tr key={item.id} onClick={showItemInfo}>
+                <tr key={item.id} onClick={() => showItemInfo(item)}>
                   <td className="item">{item && item.item ? item.item : '-'}</td>
                   <td className="price">{item && item.price ? item.price : '-'}</td>
                   <td className="purchase-date">{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
@@ -45,14 +66,14 @@ const ItemTable = ({ items }) => {
                   </td>
                   <td className="options">
                     <div className="icons-container">
-                      <span className="view">
-                        <i class="fas fa-eye"></i>
+                      <span className="view" onClick={() => showItemInfo(item)}>
+                        <i className="fas fa-eye"></i>
                       </span>
-                      <span className="edit">
-                        <i class="fas fa-pen"></i>
+                      <span className="edit" onClick={() => setCanEditContent(true)}>
+                        <i className="fas fa-pen"></i>
                       </span>
                       <span className="delete">
-                        <i class="fas fa-trash"></i>
+                        <i className="fas fa-trash"></i>
                       </span>
                     </div>
                   </td>
@@ -62,7 +83,7 @@ const ItemTable = ({ items }) => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 

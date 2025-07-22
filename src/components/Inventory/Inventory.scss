@@ -36,6 +36,7 @@
 
       &:last-child {
         width: 8%;
+        padding: 0 4px;
       }
 
       &:not(:first-child):not(:last-child) {
@@ -50,15 +51,16 @@
         color: $text-dark;
         padding: 5px;
         font-size: 0.95rem;
-        padding: 4px 6px;
-      }
-
-      td:nth-child(n + 2) {
-        text-align: center;
+        padding: 8px 6px;
       }
 
       tr:hover td {
         background-color: white;
+        cursor: pointer;
+      }
+
+      td:nth-child(n + 2) {
+        text-align: center;
       }
     }
 

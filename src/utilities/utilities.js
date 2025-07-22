@@ -2,8 +2,8 @@ import imageCompression from 'browser-image-compression';
 
 export const compressImage = async file => {
   const options = {
-    maxSizeMB: 0.1,
-    maxWidthOrHeight: 800,
+    maxSizeMB: 0.5,
+    maxWidthOrHeight: 400,
     useWebWorker: true,
   };
 
@@ -16,9 +16,6 @@ export const compressImage = async file => {
 };
 
 export const transformFieldName = str => {
-  // Add a space before all uppercase letters that are not at the beginning of the string,
-  // and then convert the whole string to lowercase.
-  // let strSplit = str.replace(/([A-Z])/g, ' $1').toLowerCase();
   let split = str.replace(/([A-Z])/g, ' $1').split(' ');
   let transformed = split.map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ');
   return transformed;
