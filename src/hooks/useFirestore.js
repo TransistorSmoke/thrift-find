@@ -13,6 +13,7 @@ const firestoreReducer = (state, action) => {
   switch (action.type) {
     case 'IS_PENDING':
       return { ...state, ispending: true, error: null, success: false };
+
     case 'ADDED_DOCUMENT':
       return {
         ...state,
@@ -20,8 +21,18 @@ const firestoreReducer = (state, action) => {
         ispending: false,
         success: true,
       };
+
+    case UPDATED_DOCUMENT:
+      return {
+        ...state,
+        document: action.payload,
+        ispending: false,
+        success: true,
+      };
+
     case 'ERROR':
       return { ...state, error: action.payload, ispending: false };
+
     default:
       return state;
   }
@@ -60,11 +71,28 @@ const useFirestore = collection => {
     }
   };
 
+  const updateDocument = async doc => {
+    dispatch({ type: 'IS_PENDING' });
+    setFsTransactionIsPending(true);
+
+    try {
+      const updatedAt = timestamp;
+      const updatedDocument = await updateDoc(collectionRef, {
+        ...doc,
+        updatedAt,
+      });
+      dispatch({ type: 'UPDATED_DOCUMENT', payload: updatedDocument });
+    } catch (err) {
+      dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
+      setFsTransactionIsPending(false);
+    }
+  };
+
   // useEffect(() => {
   //   return () => setIsCancelled(true);
   // }, [])
 
-  return { addDocument, response, fsTransactionIsPending };
+  return { addDocument, updateDocument, response, fsTransactionIsPending };
 };
 
 export default useFirestore;

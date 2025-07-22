@@ -19,6 +19,21 @@ dialog {
 
   button {
     margin-top: $space-5xl;
+
+    &.edit,
+    &.save {
+      margin-right: 12px;
+    }
+
+    &.save {
+      background-color: $secondary;
+    }
+
+    &.edit,
+    &.save,
+    &.close {
+      width: 120px;
+    }
   }
 
   .item-container {
@@ -39,6 +54,10 @@ dialog {
           content: '| $';
           margin-left: 8px;
         }
+      }
+
+      input[alt='name of item'] {
+        width: 450px;
       }
     }
 

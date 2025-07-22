@@ -10,12 +10,14 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
   const [isEditing, setIsEditing] = useState(false);
 
   // Temporary holder of item detail's edited input fields
+  const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [purchaseDate, setPurchaseDate] = useState('');
   const [sellPrice, setSellPrice] = useState('');
   const [sellDate, setSellDate] = useState('');
+  // ------------------------------------------------
 
-  const editDetails = e => {
+  const edit = e => {
     e.preventDefault();
 
     console.log('Editing details...');
@@ -25,15 +27,21 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
     console.log('purchase data ', purchaseDate);
     console.log('sell price ', sellPrice);
     console.log('sell data ', sellDate);
+    setName(name);
     setPrice(price);
     setPurchaseDate(setPurchaseDate);
     setSellPrice(sellPrice);
     setSellDate(sellDate);
   };
 
+  const save = () => {
+    console.log('saving changes...');
+  };
+
   useEffect(() => {
     console.log('price: ', price);
-
+    setIsEditing(false);
+    setName(item?.item);
     setPrice(item?.price);
     setPurchaseDate(item?.purchaseDate);
     setSellPrice(item?.sellPrice);
@@ -45,7 +53,22 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
     <dialog ref={ref} className="item-modal">
       <div className="item-container">
         <div className="item-header">
-          <h1 className="item-title">{item?.item}</h1>
+          <h1 className="item-title">
+            {isEditing ? (
+              <input
+                type="text"
+                value={name}
+                alt="name of item"
+                className="field-editing"
+                onChange={e => setName(e.target.value)}
+              />
+            ) : item?.item || name ? (
+              name
+            ) : (
+              '-'
+            )}
+          </h1>
+          {/* <h1 className="item-title">{item?.item}</h1> */}
           {/* <p className="info-purchase-price">{item?.price}</p> */}
         </div>
         {currentImageUrl && (
@@ -71,8 +94,10 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
                   className="field-editing"
                   onChange={e => setPrice(e.target.value)}
                 />
+              ) : item?.price || price ? (
+                price
               ) : (
-                item?.price || sellPrice(`$${price}`)
+                '-'
               )}
             </span>
           </div>
@@ -99,7 +124,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
               {isEditing ? (
                 <input
                   type="text"
-                  value={sellPrice}
+                  value={sellPrice || ''}
                   alt="price item is sold for"
                   className="field-editing"
                   onChange={e => setSellPrice(e.target.value)}
@@ -117,7 +142,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
               {isEditing ? (
                 <input
                   type="text"
-                  value={sellDate}
+                  value={sellDate || ''}
                   alt="date item is sold"
                   className="field-editing"
                   onChange={e => setSellDate(e.target.value)}
@@ -133,9 +158,12 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
         </div>
       </div>
 
-      <form method="dialog">
-        <button className="edit" onClick={editDetails}>
+      <form method="dialog" onSubmit={() => setIsEditing(false)}>
+        <button className="edit" onClick={edit}>
           {isEditing ? 'Finish Edit' : 'Edit'}
+        </button>
+        <button className="save" onClick={save}>
+          Save
         </button>
         <button className="close">Close</button>
       </form>
