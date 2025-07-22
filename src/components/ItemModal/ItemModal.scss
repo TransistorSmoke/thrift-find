@@ -26,13 +26,21 @@ dialog {
     }
 
     &.save {
-      background-color: $secondary;
+      background-color: $error-main;
+    }
+
+    &.save:hover {
+      background-color: $emphasis-dark-200;
     }
 
     &.edit,
     &.save,
     &.close {
       width: 120px;
+
+      &:disabled {
+        background-color: $disabled;
+      }
     }
   }
 
@@ -91,7 +99,7 @@ dialog {
       }
     }
     .item-img {
-      width: 450px;
+      width: 350px;
       margin: 12px 0;
       border: 1px solid $light;
       box-shadow: 0 2px 6px $auxiliary;

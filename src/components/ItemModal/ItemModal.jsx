@@ -1,10 +1,12 @@
 import { useState, useEffect, forwardRef } from 'react';
+import useFirestore from '../../hooks/useFirestore';
 import { Item } from '../Item/Item';
 import LoadingImage from '../../assets/images/loading.gif';
 import './ItemModal.scss';
 import dayjs from 'dayjs';
 
 const ItemModal = forwardRef(({ item, onClose }, ref) => {
+  const { updateDocument } = useFirestore('items');
   const [currentImageUrl, setCurrentImageUrl] = useState(null);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -19,29 +21,32 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
 
   const edit = e => {
     e.preventDefault();
-
     console.log('Editing details...');
-
     setIsEditing(!isEditing);
-    console.log('price ', price);
-    console.log('purchase data ', purchaseDate);
-    console.log('sell price ', sellPrice);
-    console.log('sell data ', sellDate);
     setName(name);
     setPrice(price);
-    setPurchaseDate(setPurchaseDate);
+    setPurchaseDate(purchaseDate);
     setSellPrice(sellPrice);
     setSellDate(sellDate);
   };
 
-  const save = () => {
-    console.log('saving changes...');
+  const save = async () => {
+    let details = {};
+
+    if (sellPrice) {
+      details = { ...details, sellPrice };
+    }
+
+    if (sellDate) {
+      details = { ...details, sellDate };
+    }
+
+    await updateDocument({ ...item, name, price, purchaseDate, ...details });
   };
 
   useEffect(() => {
-    console.log('price: ', price);
     setIsEditing(false);
-    setName(item?.item);
+    setName(item?.name);
     setPrice(item?.price);
     setPurchaseDate(item?.purchaseDate);
     setSellPrice(item?.sellPrice);
@@ -62,7 +67,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
                 className="field-editing"
                 onChange={e => setName(e.target.value)}
               />
-            ) : item?.item || name ? (
+            ) : item?.name || name ? (
               name
             ) : (
               '-'
@@ -77,7 +82,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
             className="item-img"
             style={{ display: isLoadingImage ? 'none' : '' }}
             onLoad={() => setIsLoadingImage(false)}
-            alt={item?.item || 'Item'}
+            alt={item?.name || 'Item'}
           />
         )}
         {isLoadingImage && <img src={LoadingImage} className="loading" />}
@@ -106,13 +111,18 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
             <span>
               {isEditing ? (
                 <input
-                  value={purchaseDate}
+                  type="text"
+                  value={purchaseDate || ''}
                   alt="date item is bought"
                   className="field-editing"
                   onChange={e => setPurchaseDate(e.target.value)}
                 />
               ) : item?.purchaseDate || purchaseDate ? (
-                dayjs(purchaseDate)?.format('DD MMM YYYY')
+                dayjs(purchaseDate).isValid() ? (
+                  dayjs(purchaseDate)?.format('DD MMM YYYY')
+                ) : (
+                  '-'
+                )
               ) : (
                 '-'
               )}
@@ -146,10 +156,17 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
                   alt="date item is sold"
                   className="field-editing"
                   onChange={e => setSellDate(e.target.value)}
-                  onBlur={() => setSellDate(sellDate)}
+                  onBlur={() => {
+                    setSellDate(sellDate);
+                    console.log('sellDate: ', sellDate);
+                  }}
                 />
               ) : item?.sellDate || sellDate ? (
-                dayjs(sellDate)?.format('DD MMM YYYY')
+                dayjs(sellDate).isValid() ? (
+                  daysjs(sellDate).format('DD MMM YYYY')
+                ) : (
+                  '-'
+                )
               ) : (
                 '-'
               )}
@@ -159,10 +176,10 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
       </div>
 
       <form method="dialog" onSubmit={() => setIsEditing(false)}>
-        <button className="edit" onClick={edit}>
+        <button className="edit" onClick={edit} disabled={isLoadingImage}>
           {isEditing ? 'Finish Edit' : 'Edit'}
         </button>
-        <button className="save" onClick={save}>
+        <button className="save" onClick={save} disabled={isLoadingImage}>
           Save
         </button>
         <button className="close">Close</button>

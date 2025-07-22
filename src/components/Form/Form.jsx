@@ -9,7 +9,7 @@ import Spinner from '../Spinner/Spinner';
 import { toast } from 'react-toastify';
 
 const Form = ({ uid }) => {
-  const [item, setItem] = useState('');
+  const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [purchaseDate, setPurchaseDate] = useState('');
   const [image, setImage] = useState(null);
@@ -24,9 +24,9 @@ const Form = ({ uid }) => {
   const handleAddItem = async e => {
     e.preventDefault();
     setAddDocIsPending(true);
-    const fields = { item, price, purchaseDate, image };
+    const fields = { name, price, purchaseDate, image };
 
-    if (item?.trim() === '' || price <= 0 || purchaseDate === '' || !image) {
+    if (name?.trim() === '' || price <= 0 || purchaseDate === '' || !image) {
       const emptyFields = await Object.entries(fields)
         .filter(([_, value]) => !value)
         .map(([key]) => transformFieldName(key));
@@ -46,7 +46,7 @@ const Form = ({ uid }) => {
         clearError();
         await addDocument({
           uid,
-          item,
+          name,
           price: parseFloat(price).toFixed(2),
           purchaseDate,
           imageUrl,
@@ -101,7 +101,7 @@ const Form = ({ uid }) => {
   };
 
   const clearAll = () => {
-    setItem('');
+    setName('');
     setPrice(0);
     setPurchaseDate('');
     setImage(null);
@@ -139,8 +139,8 @@ const Form = ({ uid }) => {
             type="text"
             name="name"
             placeholder="Item name"
-            value={item}
-            onChange={e => setItem(e.target.value)}
+            value={name}
+            onChange={e => setName(e.target.value)}
             onFocus={clearError}
           />
         </label>

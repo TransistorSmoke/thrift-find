@@ -56,7 +56,7 @@ const ItemTable = ({ items }) => {
             ) : (
               items.map(item => (
                 <tr key={item.id} onClick={() => showItemInfo(item)}>
-                  <td className="item">{item && item.item ? item.item : '-'}</td>
+                  <td className="item">{item && item.name ? item.name : '-'}</td>
                   <td className="price">{item && item.price ? item.price : '-'}</td>
                   <td className="purchase-date">{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
                   <td className="selling-price">{item && item.sellPrice ? item.sellPrice : '-'}</td>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useReducer } from 'react';
-import { appFirestore, collection as fsCollection, addDoc, timestamp } from '../firebase/config';
-import { serverTimestamp } from 'firebase/firestore';
+import { appFirestore, collection as fsCollection, addDoc, timestamp, db } from '../firebase/config';
+import { doc, updateDoc } from 'firebase/firestore';
+import dayjs from 'dayjs';
 
 const initialState = {
   document: null,
@@ -22,7 +23,7 @@ const firestoreReducer = (state, action) => {
         success: true,
       };
 
-    case UPDATED_DOCUMENT:
+    case 'UPDATED_DOCUMENT':
       return {
         ...state,
         document: action.payload,
@@ -71,17 +72,36 @@ const useFirestore = collection => {
     }
   };
 
-  const updateDocument = async doc => {
+  const updateDocument = async docToUpdate => {
     dispatch({ type: 'IS_PENDING' });
     setFsTransactionIsPending(true);
 
     try {
+      const docId = docToUpdate.id;
+      if (!docId) throw new Error('Document ID is missing');
       const updatedAt = timestamp;
-      const updatedDocument = await updateDoc(collectionRef, {
-        ...doc,
-        updatedAt,
-      });
-      dispatch({ type: 'UPDATED_DOCUMENT', payload: updatedDocument });
+      const docRef = doc(db, collection, docId);
+
+      const formattedFields = {
+        price: Number(docToUpdate.price).toFixed(2),
+        purchaseDate: dayjs(docToUpdate.purchaseDate).format('YYYY-MM-DD'),
+        ...(docToUpdate.sellPrice && {
+          sellPrice: Number(docToUpdate.sellPrice).toFixed(2),
+        }),
+        ...(docToUpdate.sellDate && {
+          sellDate: dayjs(docToUpdate.sellDate).format('YYYY-MM-DD'),
+        }),
+      };
+
+      const { id, ...updateFields } = docToUpdate;
+      const updatePayload = { ...updateFields, ...formattedFields, updatedAt };
+      await updateDoc(docRef, updatePayload);
+      dispatch({ type: 'UPDATED_DOCUMENT', payload: updatePayload });
+      // dispatchIfNotCancelled({
+      //   type: 'UPDATED_DOCUMENT',
+      //   payload: updatedDocument,
+      // });
+      setFsTransactionIsPending(false);
     } catch (err) {
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
       setFsTransactionIsPending(false);
