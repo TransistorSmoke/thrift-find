@@ -42,7 +42,7 @@ const ItemTable = ({ items }) => {
               <th>Date Purchased</th>
               <th>Selling Price (AUD)</th>
               <th>Date Sold</th>
-              <th>Profit</th>
+              <th>Profit (AUD)</th>
               <th>Actions</th>
             </tr>
           </thead>

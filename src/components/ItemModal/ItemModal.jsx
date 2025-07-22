@@ -21,7 +21,6 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
 
   const edit = e => {
     e.preventDefault();
-    console.log('Editing details...');
     setIsEditing(!isEditing);
     setName(name);
     setPrice(price);
@@ -52,7 +51,10 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
     setSellPrice(item?.sellPrice);
     setSellDate(item?.sellDate);
     setIsLoadingImage(true);
-    setCurrentImageUrl(item?.imageUrl || null);
+
+    // When an item is edited and saved, and user goes to open the same item, image does not load.
+    // Force image URL to be 'different' each time the item is accessed, to simulate a 'change of state', invoking a re-render
+    setCurrentImageUrl(item?.imageUrl ? `${item.imageUrl}?t=${Date.now()}` : null);
   }, [item]);
   return (
     <dialog ref={ref} className="item-modal">
@@ -73,8 +75,6 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
               '-'
             )}
           </h1>
-          {/* <h1 className="item-title">{item?.item}</h1> */}
-          {/* <p className="info-purchase-price">{item?.price}</p> */}
         </div>
         {currentImageUrl && (
           <img
@@ -163,7 +163,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
                 />
               ) : item?.sellDate || sellDate ? (
                 dayjs(sellDate).isValid() ? (
-                  daysjs(sellDate).format('DD MMM YYYY')
+                  dayjs(sellDate).format('DD MMM YYYY')
                 ) : (
                   '-'
                 )
@@ -176,12 +176,12 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
       </div>
 
       <form method="dialog" onSubmit={() => setIsEditing(false)}>
-        <button className="edit" onClick={edit} disabled={isLoadingImage}>
-          {isEditing ? 'Finish Edit' : 'Edit'}
+        <button className={isEditing ? 'edit' : 'save'} onClick={isEditing ? save : edit} disabled={isLoadingImage}>
+          {isEditing ? 'Save' : 'Edit'}
         </button>
-        <button className="save" onClick={save} disabled={isLoadingImage}>
+        {/* <button className="save" onClick={save} disabled={isLoadingImage}>
           Save
-        </button>
+        </button> */}
         <button className="close">Close</button>
       </form>
     </dialog>

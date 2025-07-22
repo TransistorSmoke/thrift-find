@@ -75,7 +75,7 @@ const Form = ({ uid }) => {
       return;
     }
 
-    if (file.size > 500000) {
+    if (file.size > 400000) {
       try {
         setImgIsCompressing(true);
         const { compressedFile, previewURL } = await compressImage(file);
@@ -86,8 +86,6 @@ const Form = ({ uid }) => {
         setFileError(err.message || 'Image compression failed');
       }
     }
-
-    console.log('File: ', file);
 
     setImage(file);
     if (filePreviewUrl) {

@@ -23,14 +23,11 @@ dialog {
     &.edit,
     &.save {
       margin-right: 12px;
-    }
-
-    &.save {
       background-color: $error-main;
-    }
 
-    &.save:hover {
-      background-color: $emphasis-dark-200;
+      &:hover {
+        background-color: $emphasis-dark-200;
+      }
     }
 
     &.edit,
@@ -99,7 +96,7 @@ dialog {
       }
     }
     .item-img {
-      width: 350px;
+      width: 300px;
       margin: 12px 0;
       border: 1px solid $light;
       box-shadow: 0 2px 6px $auxiliary;
