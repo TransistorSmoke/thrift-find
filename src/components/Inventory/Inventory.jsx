@@ -9,12 +9,6 @@ const ItemTable = ({ items }) => {
 
   const dialog = useRef();
 
-  // Temporary field names value during row edit
-
-  const [cellToEdit, setCellToEdit] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-
   const showItemInfo = item => {
     setSelectedItem(item);
     dialog.current?.showModal();

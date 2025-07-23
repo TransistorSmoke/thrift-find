@@ -10,6 +10,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
   const [currentImageUrl, setCurrentImageUrl] = useState(null);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState(null);
 
   // Temporary holder of item detail's edited input fields
   const [name, setName] = useState('');
@@ -29,7 +30,8 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
     setSellDate(sellDate);
   };
 
-  const save = async () => {
+  const save = async e => {
+    e.preventDefault();
     let details = {};
 
     if (sellPrice) {
@@ -40,7 +42,13 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
       details = { ...details, sellDate };
     }
 
-    await updateDocument({ ...item, name, price, purchaseDate, ...details });
+    setIsEditing(!isEditing);
+
+    try {
+      await updateDocument({ ...item, name, price, purchaseDate, ...details });
+    } catch (err) {
+      setError(err);
+    }
   };
 
   useEffect(() => {
@@ -176,6 +184,7 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
       </div>
 
       <form method="dialog" onSubmit={() => setIsEditing(false)}>
+        {error && <p className="error-msg">{error.message}</p>}
         <button className={isEditing ? 'edit' : 'save'} onClick={isEditing ? save : edit} disabled={isLoadingImage}>
           {isEditing ? 'Save' : 'Edit'}
         </button>
