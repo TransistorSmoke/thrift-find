@@ -2,10 +2,12 @@ import Form from '../components/Form/Form';
 import Inventory from '../components/Inventory/Inventory';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
+import { getCollectionName } from '../utilities/utilities';
 
 const Home = () => {
-  const { documents: items } = useCollection('items');
   const { user } = useAuthContext();
+  const collection = getCollectionName(user.ui);
+  const { documents: items } = useCollection(collection, ['uid', '==', user.uid], ['createdAt', 'desc']);
 
   return (
     <div className="form-section">

@@ -33,6 +33,21 @@ export const deleteToastSettings = {
 };
 
 export const calculateProfit = (buy, sell) => {
-  console.log('buy, sell: ', buy, sell);
   return parseFloat(buy) && parseFloat(sell) ? sell - buy : '-';
 };
+
+/*
+ * Gets either demo or prod collection depending on user
+ * id - UID of user
+ */
+export const getCollectionName = id => (id === import.meta.env.VITE_PROD_USER_ID ? 'items' : 'items-demo');
+
+/*
+ * Gets either demo or prod storage bucket depending on user
+ * id - UID of user
+ * name - name of uploaded image
+ * ts - timestamp
+ */
+
+export const getStorageBucketName = (id, name, ts) =>
+  id === import.meta.env.VITE_PROD_USER_ID ? `posts/${name}-${ts}` : `posts-demo/${name}-${ts}`;

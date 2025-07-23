@@ -11,17 +11,10 @@ const ResetPassword = () => {
 
   const handleSignup = e => {
     e.preventDefault();
-    console.log('signing up...');
-
-    console.log('display name: ', displayName);
-    console.log('email: ', email);
-    console.log('password: ', password);
 
     if (displayName === '' || email === '' || password === '') {
       setInputFieldErrors('Please input your display name, email and/or password');
     } else {
-      console.log('signing up with displayname, email, password: ', displayName, email, password);
-
       signup(email, password, displayName);
     }
   };

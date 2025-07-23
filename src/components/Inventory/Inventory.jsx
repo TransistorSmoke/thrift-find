@@ -43,7 +43,7 @@ const ItemTable = ({ items }) => {
           <tbody>
             {items && items.length === 0 ? (
               <tr>
-                <td colSpan={6} style={{ textAlign: 'center' }}>
+                <td colSpan={7} style={{ textAlign: 'center' }}>
                   No items found.
                 </td>
               </tr>

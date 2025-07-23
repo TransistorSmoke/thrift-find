@@ -1,14 +1,20 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import './Form.scss';
 import plus from '../../assets/images/icons/plus.svg';
 import useFirestore from '../../hooks/useFirestore';
-import { compressImage, transformFieldName, deleteToastSettings as settings } from '../../utilities/utilities';
+import {
+  compressImage,
+  transformFieldName,
+  deleteToastSettings as settings,
+  getCollectionName,
+  getStorageBucketName,
+} from '../../utilities/utilities';
 import { storage, timestamp, uploadBytes, ref } from '../../firebase/config';
 import { getDownloadURL } from 'firebase/storage';
 import Spinner from '../Spinner/Spinner';
 import { toast } from 'react-toastify';
 
-const Form = ({ uid }) => {
+const Form = ({ uid, collection }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [purchaseDate, setPurchaseDate] = useState('');
@@ -19,7 +25,8 @@ const Form = ({ uid }) => {
   const [error, setError] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const fileInputRef = useRef(null);
-  const { addDocument } = useFirestore('items');
+  const collectionName = getCollectionName(uid);
+  const { addDocument } = useFirestore(collectionName);
 
   const handleAddItem = async e => {
     e.preventDefault();
@@ -38,7 +45,8 @@ const Form = ({ uid }) => {
       try {
         let imageUrl = '';
         if (image) {
-          const imageRef = ref(storage, `posts/${image.name}-${timestamp}`);
+          const storageName = getStorageBucketName(uid, image.name, timestamp);
+          const imageRef = ref(storage, storageName);
           await uploadBytes(imageRef, image);
           imageUrl = await getDownloadURL(imageRef);
         }
@@ -106,10 +114,7 @@ const Form = ({ uid }) => {
     setFileError(null);
     setError(null);
     clearPreviewUrl(previewUrl);
-    // if (previewUrl) {
-    //   URL.revokeObjectURL(previewUrl);
-    //   setPreviewUrl(null);
-    // }
+
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }

@@ -14,11 +14,8 @@ const useSignup = () => {
     setError(null);
     setIsPending(true);
 
-    console.log('Logged email from the hook: ', email);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
-
-      console.log('Signup response: ', response);
 
       if (!response) {
         throw new Error('Could not complete signup process');

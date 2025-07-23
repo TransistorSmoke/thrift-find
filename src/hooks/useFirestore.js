@@ -63,7 +63,6 @@ const useFirestore = collection => {
       //   type: 'ADDED_DOCUMENT',
       //   payload: addedDocument,
       // });
-      console.log('Document added: ', addedDocument);
       setFsTransactionIsPending(false);
     } catch (err) {
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });

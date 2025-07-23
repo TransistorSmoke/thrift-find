@@ -13,17 +13,14 @@ const useLogout = () => {
     setIsPending(true);
 
     try {
-      console.log('Logging out...');
       const res = await signOut(auth);
 
       // if (!isCancelled) {
-      //   console.log('Logout response: ', res);
       //   dispatch({ type: 'LOGOUT' });
       //   setIsPending(false);
       //   setError(null);
       // }
 
-      console.log('Logout response: ', res);
       dispatch({ type: 'LOGOUT' });
       setIsPending(false);
       setError(null);

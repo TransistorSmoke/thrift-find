@@ -164,10 +164,6 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
                   alt="date item is sold"
                   className="field-editing"
                   onChange={e => setSellDate(e.target.value)}
-                  onBlur={() => {
-                    setSellDate(sellDate);
-                    console.log('sellDate: ', sellDate);
-                  }}
                 />
               ) : item?.sellDate || sellDate ? (
                 dayjs(sellDate).isValid() ? (
