@@ -32,9 +32,15 @@
   }
 
   input {
-    // border: 1px solid red;
     padding: $space-smd $space-2xs;
     margin: $space-2xs 0;
+  }
+
+  .forgot-password {
+    margin-top: $space-lg;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   .forgot-password > a {
@@ -42,13 +48,11 @@
     color: $emphasis-dark-200;
     font-weight: 300;
     font-size: 0.85rem;
-    display: block;
-    margin: $space-lg auto 0 auto;
-    text-align: center;
+    display: inline-block;
     transition: color 0.25s ease;
 
     &:hover {
-      color: $emphasis-dark;
+      color: $text-dark;
       transition: color 0.25s ease;
     }
   }
