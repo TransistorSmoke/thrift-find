@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 import { auth, signInWithEmailAndPassword } from '../firebase/config';
-import { FIREBASE_ERROR_CODE_LIST, FIREBASE_ERROR_MAP } from '../utilities/constants';
+import {
+  FIREBASE_ERROR_CODE_LIST,
+  FIREBASE_ERROR_MAP,
+} from '../utilities/constants';
 
 const useLogin = () => {
   const [isCancelled, setIsCancelled] = useState(false);
@@ -40,7 +43,9 @@ const useLogin = () => {
       // }
 
       const found = FIREBASE_ERROR_CODE_LIST.includes(err.code);
-      let message = found ? FIREBASE_ERROR_MAP[err.code] : 'An error occurred during login. Please try again later.';
+      let message = found
+        ? FIREBASE_ERROR_MAP[err.code]
+        : 'An error occurred during login. Please try again later.';
 
       if (err.code === 'auth/invalid-credential') {
         message = 'You entered a wrong email or password';

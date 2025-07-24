@@ -25,7 +25,13 @@ const Login = () => {
         <h1>Log in</h1>
         <label>
           <span>Email</span>
-          <input type="email" onChange={e => setEmail(e.target.value)} placeholder="Email" name="email" id="email" />
+          <input
+            type="email"
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email"
+            name="email"
+            id="email"
+          />
         </label>
         <label>
           <span>Password</span>

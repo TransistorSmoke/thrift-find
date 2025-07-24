@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
-import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase/config';
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from '../firebase/config';
 
 const useResetPassword = () => {
   const [isCancelled, setIsCancelled] = useState(false);

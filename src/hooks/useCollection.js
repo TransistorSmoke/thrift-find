@@ -1,6 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { db } from '../firebase/config';
-import { collection, onSnapshot, query as fsQuery, where, orderBy as fsOrderBy } from 'firebase/firestore';
+import {
+  collection,
+  onSnapshot,
+  query as fsQuery,
+  where,
+  orderBy as fsOrderBy,
+} from 'firebase/firestore';
 
 export const useCollection = (coll, _query = null, _orderBy = null) => {
   const [documents, setDocuments] = useState(null);

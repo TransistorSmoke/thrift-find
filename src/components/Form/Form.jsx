@@ -38,7 +38,9 @@ const Form = ({ uid, collection }) => {
         .filter(([_, value]) => !value)
         .map(([key]) => transformFieldName(key));
 
-      setError(`Please fill in the following fields: ${emptyFields.join(', ')}`);
+      setError(
+        `Please fill in the following fields: ${emptyFields.join(', ')}`
+      );
       setAddDocIsPending(false);
       return;
     } else {

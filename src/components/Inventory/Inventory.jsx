@@ -6,11 +6,13 @@ import ItemModal from '../ItemModal/ItemModal';
 const ItemTable = ({ items }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [canEditContent, setCanEditContent] = useState(false);
-
+  const [action, setAction] = useState(null);
   const dialog = useRef();
+  const ACTION_ITEM_DELETE = 'delete';
 
-  const showItemInfo = item => {
+  const showItemInfo = (item, action = null) => {
     setSelectedItem(item);
+    setAction(action);
     dialog.current?.showModal();
   };
 
@@ -25,7 +27,12 @@ const ItemTable = ({ items }) => {
 
   return (
     <>
-      <ItemModal ref={dialog} item={selectedItem} onClose={handleClose} />
+      <ItemModal
+        ref={dialog}
+        item={selectedItem}
+        action={action}
+        onClose={handleClose}
+      />
       <div className="table-container" tabIndex="0">
         <table className="table-main">
           <caption>Inventory</caption>
@@ -49,24 +56,39 @@ const ItemTable = ({ items }) => {
               </tr>
             ) : (
               items.map(item => (
-                <tr key={item.id} onClick={() => showItemInfo(item)}>
-                  <td className="item">{item && item.name ? item.name : '-'}</td>
-                  <td className="price">{item && item.price ? item.price : '-'}</td>
-                  <td className="purchase-date">{item && item.purchaseDate ? item.purchaseDate : '-'}</td>
-                  <td className="selling-price">{item && item.sellPrice ? item.sellPrice : '-'}</td>
-                  <td className="sell-date">{item && item.sellDate ? item.sellDate : '-'}</td>
+                <tr key={item.id}>
+                  <td className="item">
+                    {item && item.name ? item.name : '-'}
+                  </td>
+                  <td className="price">
+                    {item && item.price ? item.price : '-'}
+                  </td>
+                  <td className="purchase-date">
+                    {item && item.purchaseDate ? item.purchaseDate : '-'}
+                  </td>
+                  <td className="selling-price">
+                    {item && item.sellPrice ? item.sellPrice : '-'}
+                  </td>
+                  <td className="sell-date">
+                    {item && item.sellDate ? item.sellDate : '-'}
+                  </td>
                   <td className="profit">
-                    {item && item.price && item.sellPrice ? (+item.sellPrice - +item.price).toFixed(2) : '-'}
+                    {item && item.price && item.sellPrice
+                      ? (+item.sellPrice - +item.price).toFixed(2)
+                      : '-'}
                   </td>
                   <td className="options">
                     <div className="icons-container">
-                      <span className="view" onClick={() => showItemInfo(item)}>
+                      {/* <span className="view" onClick={() => showItemInfo(item)}>
                         <i className="fas fa-eye"></i>
-                      </span>
-                      <span className="edit" onClick={() => setCanEditContent(true)}>
+                      </span> */}
+                      <span className="edit" onClick={() => showItemInfo(item)}>
                         <i className="fas fa-pen"></i>
                       </span>
-                      <span className="delete">
+                      <span
+                        className="delete"
+                        onClick={() => showItemInfo(item, ACTION_ITEM_DELETE)}
+                      >
                         <i className="fas fa-trash"></i>
                       </span>
                     </div>

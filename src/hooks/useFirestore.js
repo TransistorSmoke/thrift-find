@@ -1,5 +1,11 @@
 import { useState, useEffect, useReducer } from 'react';
-import { appFirestore, collection as fsCollection, addDoc, timestamp, db } from '../firebase/config';
+import {
+  appFirestore,
+  collection as fsCollection,
+  addDoc,
+  timestamp,
+  db,
+} from '../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
 import dayjs from 'dayjs';
 

@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase/config';
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from '../firebase/config';
 import { useAuthContext } from './useAuthContext';
 
 const useSignup = () => {
@@ -15,7 +19,11 @@ const useSignup = () => {
     setIsPending(true);
 
     try {
-      const response = await createUserWithEmailAndPassword(auth, email, password);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
       if (!response) {
         throw new Error('Could not complete signup process');

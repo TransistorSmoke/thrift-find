@@ -19,10 +19,22 @@ function App() {
           <Navbar />
           <main>
             <Routes>
-              <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-              <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-              <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />
-              <Route path="/reset-password" element={user ? <Navigate to="/" /> : <ResetPassword />} />
+              <Route
+                path="/"
+                element={user ? <Home /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/login"
+                element={user ? <Navigate to="/" /> : <Login />}
+              />
+              <Route
+                path="/signup"
+                element={user ? <Navigate to="/" /> : <Signup />}
+              />
+              <Route
+                path="/reset-password"
+                element={user ? <Navigate to="/" /> : <ResetPassword />}
+              />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </main>

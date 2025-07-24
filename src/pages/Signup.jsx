@@ -13,7 +13,9 @@ const Signup = () => {
     e.preventDefault();
 
     if (displayName === '' || email === '' || password === '') {
-      setInputFieldErrors('Please input your display name, email and/or password');
+      setInputFieldErrors(
+        'Please input your display name, email and/or password'
+      );
     } else {
       signup(email, password, displayName);
     }
@@ -35,7 +37,13 @@ const Signup = () => {
         </label>
         <label>
           <span>Email</span>
-          <input type="email" onChange={e => setEmail(e.target.value)} placeholder="Email" name="email" id="email" />
+          <input
+            type="email"
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Email"
+            name="email"
+            id="email"
+          />
         </label>
         <label>
           <span>Password</span>

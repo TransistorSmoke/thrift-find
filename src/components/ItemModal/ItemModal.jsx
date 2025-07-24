@@ -1,16 +1,16 @@
 import { useState, useEffect, forwardRef } from 'react';
-import useFirestore from '../../hooks/useFirestore';
-import { Item } from '../Item/Item';
-import LoadingImage from '../../assets/images/loading.gif';
 import './ItemModal.scss';
+import useFirestore from '../../hooks/useFirestore';
+import LoadingImage from '../../assets/images/loading.gif';
 import dayjs from 'dayjs';
 
-const ItemModal = forwardRef(({ item, onClose }, ref) => {
+const ItemModal = forwardRef(({ item, action }, ref) => {
   const { updateDocument } = useFirestore('items');
   const [currentImageUrl, setCurrentImageUrl] = useState(null);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(null);
+  const isDelete = action === 'delete';
 
   // Temporary holder of item detail's edited input fields
   const [name, setName] = useState('');
@@ -62,12 +62,21 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
 
     // When an item is edited and saved, and user goes to open the same item, image does not load.
     // Force image URL to be 'different' each time the item is accessed, to simulate a 'change of state', invoking a re-render
-    setCurrentImageUrl(item?.imageUrl ? `${item.imageUrl}?t=${Date.now()}` : null);
+    setCurrentImageUrl(
+      item?.imageUrl ? `${item.imageUrl}?t=${Date.now()}` : null
+    );
   }, [item]);
   return (
     <dialog ref={ref} className="item-modal">
-      <div className="item-container">
-        <div className="item-header">
+      {/* <div className="item-container"> */}
+      <div className={`item-container ${isDelete ? 'warning' : ''}`}>
+        {isDelete && !isLoadingImage && (
+          <div className="delete-notice">
+            <i class="delete-icon fa-solid fa-triangle-exclamation"></i>
+            <p>Are you sure you want to delete this item?</p>
+          </div>
+        )}
+        <div className={`item-header ${isDelete ? 'warning' : ''}`}>
           <h1 className="item-title">
             {isEditing ? (
               <input
@@ -179,15 +188,30 @@ const ItemModal = forwardRef(({ item, onClose }, ref) => {
         </div>
       </div>
 
-      <form method="dialog" onSubmit={() => setIsEditing(false)}>
+      <form
+        method="dialog"
+        onSubmit={() => setIsEditing(false)}
+        className={isDelete ? 'warning' : ''}
+      >
         {error && <p className="error-msg">{error.message}</p>}
-        <button className={isEditing ? 'edit' : 'save'} onClick={isEditing ? save : edit} disabled={isLoadingImage}>
-          {isEditing ? 'Save' : 'Edit'}
-        </button>
-        {/* <button className="save" onClick={save} disabled={isLoadingImage}>
-          Save
-        </button> */}
-        <button className="close">Close</button>
+        {isDelete ? (
+          <>
+            <button className="delete" disabled={isLoadingImage}>
+              Delete
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className={isEditing ? 'edit' : 'save'}
+              onClick={isEditing ? save : edit}
+              disabled={isLoadingImage}
+            >
+              {isEditing ? 'Save' : 'Edit'}
+            </button>
+          </>
+        )}
+        <button className="close">{isDelete ? 'Cancel' : 'Close'}</button>
       </form>
     </dialog>
   );

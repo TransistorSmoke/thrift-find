@@ -6,7 +6,6 @@ dialog {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   background-color: $bg-light;
 }
 
@@ -15,13 +14,17 @@ dialog {
   box-shadow: 0 2px 6px $auxiliary;
   width: 600px;
   text-align: center;
-  padding-bottom: $space-lg;
 
   button {
     margin-top: $space-5xl;
 
+    .delete-action {
+      z-index: 20;
+    }
+
     &.edit,
-    &.save {
+    &.save,
+    &.delete {
       margin-right: 12px;
       background-color: $error-main;
 
@@ -32,6 +35,7 @@ dialog {
 
     &.edit,
     &.save,
+    &.delete,
     &.close {
       width: 120px;
 
@@ -47,6 +51,31 @@ dialog {
   }
 
   .item-container {
+    &.warning {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .delete-notice {
+      position: absolute;
+      left: 0;
+      top: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: $space-3xl;
+      width: 100%;
+      height: 30%;
+      font-size: 1.5rem;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: $error-light;
+
+      .delete-icon {
+        font-size: 5rem;
+        margin-bottom: $space-base;
+      }
+    }
+
     .item-header {
       display: flex;
       justify-content: center;
@@ -57,6 +86,10 @@ dialog {
       height: 50px;
       box-shadow: 0 2px 6px $auxiliary;
       margin-bottom: $space-md;
+
+      &.warning {
+        background-color: $error-main;
+      }
 
       .item-title {
         text-transform: uppercase;
@@ -84,7 +117,6 @@ dialog {
       & > * {
         display: flex;
         justify-content: space-between;
-        // margin-bottom: 2px;
         font-weight: 600;
         font-size: 1.15rem;
         height: 24px;
@@ -119,5 +151,9 @@ dialog {
       margin-bottom: $space-3xl;
       margin-top: 32px;
     }
+  }
+
+  form.warning {
+    background-color: rgba(0, 0, 0, 0.4);
   }
 }

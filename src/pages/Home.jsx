@@ -7,7 +7,11 @@ import { getCollectionName } from '../utilities/utilities';
 const Home = () => {
   const { user } = useAuthContext();
   const collection = getCollectionName(user.ui);
-  const { documents: items } = useCollection(collection, ['uid', '==', user.uid], ['createdAt', 'desc']);
+  const { documents: items } = useCollection(
+    collection,
+    ['uid', '==', user.uid],
+    ['createdAt', 'desc']
+  );
 
   return (
     <div className="form-section">

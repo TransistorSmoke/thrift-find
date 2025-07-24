@@ -4,7 +4,9 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer-content">
-        <p>&copy; {new Date().getFullYear()} Thrift Finds. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} Thrift Finds. All rights reserved.
+        </p>
         <p>Created by Jason Alegado</p>
       </div>
     </footer>

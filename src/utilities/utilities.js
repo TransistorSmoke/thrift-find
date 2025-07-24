@@ -17,7 +17,9 @@ export const compressImage = async file => {
 
 export const transformFieldName = str => {
   let split = str.replace(/([A-Z])/g, ' $1').split(' ');
-  let transformed = split.map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' ');
+  let transformed = split
+    .map(str => str.charAt(0).toUpperCase() + str.slice(1))
+    .join(' ');
   return transformed;
 };
 
@@ -40,7 +42,8 @@ export const calculateProfit = (buy, sell) => {
  * Gets either demo or prod collection depending on user
  * id - UID of user
  */
-export const getCollectionName = id => (id === import.meta.env.VITE_PROD_USER_ID ? 'items' : 'items-demo');
+export const getCollectionName = id =>
+  id === import.meta.env.VITE_PROD_USER_ID ? 'items' : 'items-demo';
 
 /*
  * Gets either demo or prod storage bucket depending on user
@@ -50,4 +53,6 @@ export const getCollectionName = id => (id === import.meta.env.VITE_PROD_USER_ID
  */
 
 export const getStorageBucketName = (id, name, ts) =>
-  id === import.meta.env.VITE_PROD_USER_ID ? `posts/${name}-${ts}` : `posts-demo/${name}-${ts}`;
+  id === import.meta.env.VITE_PROD_USER_ID
+    ? `posts/${name}-${ts}`
+    : `posts-demo/${name}-${ts}`;
