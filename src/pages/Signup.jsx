@@ -57,7 +57,9 @@ const Signup = () => {
         </label>
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
         {error && <p className="text-error">{error}</p>}
-        <button>{!isPending ? 'Signup' : 'Signing up...'}</button>
+        <button className="app-button">
+          {!isPending ? 'Signup' : 'Signing up...'}
+        </button>
       </form>
     </>
   );

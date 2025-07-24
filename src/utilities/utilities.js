@@ -1,9 +1,11 @@
 import imageCompression from 'browser-image-compression';
+import heic2any from 'heic2any';
 
 export const compressImage = async file => {
+  // Image compression time!
   const options = {
-    maxSizeMB: 0.35,
-    maxWidthOrHeight: 300,
+    maxSizeMB: 0.5,
+    maxWidthOrHeight: 500,
     useWebWorker: true,
   };
 
@@ -44,7 +46,6 @@ export const calculateProfit = (buy, sell) => {
  */
 export const getCollectionName = id =>
   id === import.meta.env.VITE_PROD_USER_ID ? 'items' : 'items-demo';
-
 /*
  * Gets either demo or prod storage bucket depending on user
  * id - UID of user

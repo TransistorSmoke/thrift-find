@@ -19,7 +19,9 @@ const Navbar = () => {
             <li>
               <div className="greeting">
                 <p>Welcome, {user.displayName}!</p>
-                <button onClick={logout}>Log out</button>
+                <button className="app-button" onClick={logout}>
+                  Log out
+                </button>
               </div>
             </li>
           </>

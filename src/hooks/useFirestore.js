@@ -96,13 +96,15 @@ const useFirestore = collection => {
       const docRef = doc(db, collection, docId);
 
       const formattedFields = {
-        price: Number(docToUpdate.price).toFixed(2),
-        purchaseDate: dayjs(docToUpdate.purchaseDate).format('YYYY-MM-DD'),
-        ...(docToUpdate.sellPrice && {
-          sellPrice: Number(docToUpdate.sellPrice).toFixed(2),
-        }),
+        price: Number(docToUpdate.price).toFixed(2) || '',
+        purchaseDate:
+          dayjs(docToUpdate.purchaseDate).format('YYYY-MM-DD') || '',
+        ...(docToUpdate.sellPrice &&
+          docToUpdate.sellPrice && {
+            sellPrice: Number(docToUpdate?.sellPrice).toFixed(2) || '',
+          }),
         ...(docToUpdate.sellDate && {
-          sellDate: dayjs(docToUpdate.sellDate).format('YYYY-MM-DD'),
+          sellDate: dayjs(docToUpdate?.sellDate).format('YYYY-MM-DD') || '',
         }),
       };
 
@@ -135,7 +137,6 @@ const useFirestore = collection => {
         await deleteObject(imgRef);
       }
 
-      console.log('Collection name inside firestore hook: ', collection);
       // dispatchIfNotCancelled({
       //   type: 'DELETED_DOCUMENT',
       // });
@@ -143,9 +144,7 @@ const useFirestore = collection => {
       // 2.) Delete the document itself.
       await deleteDoc(docRef);
       dispatch({ type: 'DELETED_DOCUMENT' });
-      console.log('Successfully delete item with ID: ', docId);
     } catch (err) {
-      console.error('Failed to delete item: ', err);
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
       setFsTransactionIsPending(false);
     }

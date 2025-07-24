@@ -116,14 +116,19 @@
   }
 
   label,
-  .error {
+  .error,
+  .info-processing {
     width: 100%;
   }
 
-  .error {
+  .error,
+  .info-processing {
     text-align: center;
     color: $error-main;
     font-size: 0.9rem;
-    // margin-top: $space-xs;
+  }
+
+  .info-processing {
+    color: $primary;
   }
 }

@@ -45,7 +45,9 @@ const Login = () => {
         </label>
         {error && <p className="text-error">{error}</p>}
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
-        <button>{!isPending ? 'Login' : 'Logging in...'}</button>
+        <button className="app-button">
+          {!isPending ? 'Login' : 'Logging in...'}
+        </button>
         <p className="forgot-password">
           <Link to="/reset-password">Forgot password?</Link>
         </p>

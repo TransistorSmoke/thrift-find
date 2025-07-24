@@ -4,7 +4,6 @@ import ItemModal from '../ItemModal/ItemModal';
 
 const Inventory = ({ items, uid }) => {
   const [selectedItem, setSelectedItem] = useState(null);
-  const [canEditContent, setCanEditContent] = useState(false);
   const [action, setAction] = useState(null);
   const dialog = useRef();
   const ACTION_ITEM_DELETE = 'delete';

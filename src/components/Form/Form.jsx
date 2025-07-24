@@ -177,7 +177,7 @@ const Form = ({ uid, collection }) => {
           <input
             type="file"
             name="file-item"
-            accept="image/*"
+            accept=".heic,image/heic,image/heif,image/*"
             ref={fileInputRef}
             onChange={handleFileChange}
             onFocus={clearError}
@@ -193,6 +193,9 @@ const Form = ({ uid, collection }) => {
         </button>
         {error && <p className="error">{error}</p>}
         {fileError && <p className="error">{fileError}</p>}
+        {imgIsCompressing && (
+          <p className="info-processing">Image is being processed...</p>
+        )}
       </form>
     </div>
   );

@@ -1,4 +1,5 @@
 import Form from '../components/Form/Form';
+import { useEffect } from 'react';
 import Inventory from '../components/Inventory/Inventory';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
@@ -6,7 +7,7 @@ import { getCollectionName } from '../utilities/utilities';
 
 const Home = () => {
   const { user } = useAuthContext();
-  const collection = getCollectionName(user.ui);
+  const collection = getCollectionName(user.uid);
   const { documents: items } = useCollection(
     collection,
     ['uid', '==', user.uid],

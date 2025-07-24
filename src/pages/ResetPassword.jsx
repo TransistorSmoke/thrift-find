@@ -37,7 +37,7 @@ const ResetPassword = () => {
         </label>
         {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
         {error && <p className="text-error">{error}</p>}
-        <button>
+        <button className="app-button">
           {!isPending ? 'Reset Password' : 'Sending Reset Email...'}
         </button>
       </form>
