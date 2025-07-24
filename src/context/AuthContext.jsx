@@ -17,6 +17,9 @@ export const authReducer = (state, action) => {
         user: null,
       };
 
+    case 'RESET_PASSWORD':
+      return { ...state };
+
     case 'AUTH_IS_READY':
       return {
         ...state,

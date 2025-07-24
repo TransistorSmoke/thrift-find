@@ -1,42 +1,43 @@
 import { useState } from 'react';
-import useSignup from '../hooks/useSignup';
-import './Signup.scss';
 
 const ResetPassword = () => {
-  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [inputFieldErrors, setInputFieldErrors] = useState('');
-  const { signup, error, isPending } = useSignup();
+  const [inputError, setInputError] = useState('');
+  const [message, setMessage] = useState('');
+  const { resetPassword, error, isPending } = useResetPassword();
 
-  const handleSignup = e => {
+  const handlePasswordResetRequest = e => {
     e.preventDefault();
 
-    if (displayName === '' || email === '' || password === '') {
-      setInputFieldErrors(
-        'Please input your display name, email and/or password'
-      );
+    if (!email) {
+      setInputError('Please input your email address');
     } else {
-      signup(email, password, displayName);
+      resetPassword(email);
+      setEmail('');
+      setMessage(
+        'Password reset email is sent. Check your inbox or spam folder.'
+      );
     }
   };
 
   return (
     <>
-      <form className="signup" onSubmit={handleSignup}>
+      <form className="signup" onSubmit={handlePasswordResetRequest}>
         <h1>Reset Password</h1>
         <label>
           <span>Email</span>
           <input
             type="email"
+            value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Email"
             name="email"
             id="email"
           />
         </label>
-        {inputFieldErrors && <p className="text-error">{inputFieldErrors}</p>}
+        {inputError && <p className="text-error">{inputError}</p>}
         {error && <p className="text-error">{error}</p>}
+        {message && <p className="text-info">{message}</p>}
         <button className="app-button">
           {!isPending ? 'Reset Password' : 'Sending Reset Email...'}
         </button>

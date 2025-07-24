@@ -50,9 +50,17 @@ input {
   }
 }
 
-.text-error {
-  color: $error-main;
+.text-error,
+.text-info {
   margin-top: $space-xs;
   font-size: 0.9rem;
   margin: $space-xs auto;
+}
+
+.text-error {
+  color: $error-main;
+}
+
+.text-info {
+  color: $primary;
 }
