@@ -3,9 +3,20 @@ import './ItemModal.scss';
 import useFirestore from '../../hooks/useFirestore';
 import LoadingImage from '../../assets/images/loading.gif';
 import dayjs from 'dayjs';
+import {
+  getCollectionName,
+  getStorageBucketName,
+  deleteToastSettings as settings,
+} from '../../utilities/utilities';
+import { toast } from 'react-toastify';
 
-const ItemModal = forwardRef(({ item, action }, ref) => {
-  const { updateDocument } = useFirestore('items');
+const ItemModal = forwardRef(({ item, uid, action }, ref) => {
+  const collectionName = getCollectionName(uid);
+  const bucketName = getStorageBucketName(uid);
+  const { updateDocument, deleteDocument } = useFirestore(
+    collectionName,
+    bucketName
+  );
   const [currentImageUrl, setCurrentImageUrl] = useState(null);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -47,7 +58,24 @@ const ItemModal = forwardRef(({ item, action }, ref) => {
     try {
       await updateDocument({ ...item, name, price, purchaseDate, ...details });
     } catch (err) {
-      setError(err);
+      setError(err.message);
+    }
+  };
+
+  const deleteDoc = async e => {
+    e.preventDefault();
+    console.log('image URL of the item to be deleted: ', item.imageUrl);
+    // return;
+
+    try {
+      await deleteDocument(item.id, item.imageUrl);
+      toast.success('Item successfully deleted', settings);
+
+      if (ref?.current) {
+        ref.current.close();
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -72,7 +100,7 @@ const ItemModal = forwardRef(({ item, action }, ref) => {
       <div className={`item-container ${isDelete ? 'warning' : ''}`}>
         {isDelete && !isLoadingImage && (
           <div className="delete-notice">
-            <i class="delete-icon fa-solid fa-triangle-exclamation"></i>
+            <i className="delete-icon fa-solid fa-triangle-exclamation"></i>
             <p>Are you sure you want to delete this item?</p>
           </div>
         )}
@@ -196,7 +224,11 @@ const ItemModal = forwardRef(({ item, action }, ref) => {
         {error && <p className="error-msg">{error.message}</p>}
         {isDelete ? (
           <>
-            <button className="delete" disabled={isLoadingImage}>
+            <button
+              className="delete"
+              onClick={deleteDoc}
+              disabled={isLoadingImage}
+            >
               Delete
             </button>
           </>

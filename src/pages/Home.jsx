@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="form-section">
       <Form uid={user.uid} />
-      <Inventory items={items} />
+      <Inventory items={items} uid={user.uid} />
     </div>
   );
 };

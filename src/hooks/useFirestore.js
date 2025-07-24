@@ -2,11 +2,12 @@ import { useState, useEffect, useReducer } from 'react';
 import {
   appFirestore,
   collection as fsCollection,
-  addDoc,
   timestamp,
   db,
+  storage,
 } from '../firebase/config';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { ref as storageRef, deleteObject } from 'firebase/storage';
 import dayjs from 'dayjs';
 
 const initialState = {
@@ -19,26 +20,34 @@ const initialState = {
 const firestoreReducer = (state, action) => {
   switch (action.type) {
     case 'IS_PENDING':
-      return { ...state, ispending: true, error: null, success: false };
+      return { ispending: true, error: null, success: false };
 
     case 'ADDED_DOCUMENT':
       return {
-        ...state,
         document: action.payload,
         ispending: false,
         success: true,
+        error: null,
       };
 
     case 'UPDATED_DOCUMENT':
       return {
-        ...state,
         document: action.payload,
         ispending: false,
         success: true,
+        error: null,
+      };
+
+    case 'DELETED_DOCUMENT':
+      return {
+        document: null,
+        ispending: false,
+        success: true,
+        error: null,
       };
 
     case 'ERROR':
-      return { ...state, error: action.payload, ispending: false };
+      return { error: action.payload, ispending: false };
 
     default:
       return state;
@@ -112,11 +121,47 @@ const useFirestore = collection => {
     }
   };
 
+  const deleteDocument = async (docId, imgUrl) => {
+    dispatch({ type: 'IS_PENDING' });
+    setFsTransactionIsPending(true);
+
+    try {
+      if (!docId) throw new Error('Document ID is missing');
+      const docRef = doc(db, collection, docId);
+
+      // 1.) Delete image first associated with the document.
+      if (imgUrl) {
+        const imgRef = storageRef(storage, imgUrl);
+        await deleteObject(imgRef);
+      }
+
+      console.log('Collection name inside firestore hook: ', collection);
+      // dispatchIfNotCancelled({
+      //   type: 'DELETED_DOCUMENT',
+      // });
+
+      // 2.) Delete the document itself.
+      await deleteDoc(docRef);
+      dispatch({ type: 'DELETED_DOCUMENT' });
+      console.log('Successfully delete item with ID: ', docId);
+    } catch (err) {
+      console.error('Failed to delete item: ', err);
+      dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
+      setFsTransactionIsPending(false);
+    }
+  };
+
   // useEffect(() => {
   //   return () => setIsCancelled(true);
   // }, [])
 
-  return { addDocument, updateDocument, response, fsTransactionIsPending };
+  return {
+    addDocument,
+    updateDocument,
+    deleteDocument,
+    response,
+    fsTransactionIsPending,
+  };
 };
 
 export default useFirestore;

@@ -1,9 +1,8 @@
 import './Inventory.scss';
 import { useState, useRef } from 'react';
-
 import ItemModal from '../ItemModal/ItemModal';
 
-const ItemTable = ({ items }) => {
+const Inventory = ({ items, uid }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [canEditContent, setCanEditContent] = useState(false);
   const [action, setAction] = useState(null);
@@ -32,6 +31,7 @@ const ItemTable = ({ items }) => {
         item={selectedItem}
         action={action}
         onClose={handleClose}
+        uid={uid}
       />
       <div className="table-container" tabIndex="0">
         <table className="table-main">
@@ -79,11 +79,8 @@ const ItemTable = ({ items }) => {
                   </td>
                   <td className="options">
                     <div className="icons-container">
-                      {/* <span className="view" onClick={() => showItemInfo(item)}>
+                      <span className="view" onClick={() => showItemInfo(item)}>
                         <i className="fas fa-eye"></i>
-                      </span> */}
-                      <span className="edit" onClick={() => showItemInfo(item)}>
-                        <i className="fas fa-pen"></i>
                       </span>
                       <span
                         className="delete"
@@ -103,4 +100,4 @@ const ItemTable = ({ items }) => {
   );
 };
 
-export default ItemTable;
+export default Inventory;
