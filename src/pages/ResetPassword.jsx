@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useResetPassword from '../hooks/useResetPassword';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
