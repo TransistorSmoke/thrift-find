@@ -15,27 +15,27 @@ const useLogout = () => {
     try {
       const res = await signOut(auth);
 
-      // if (!isCancelled) {
-      //   dispatch({ type: 'LOGOUT' });
-      //   setIsPending(false);
-      //   setError(null);
-      // }
+      if (!isCancelled) {
+        dispatch({ type: 'LOGOUT' });
+        setIsPending(false);
+        setError(null);
+      }
 
-      dispatch({ type: 'LOGOUT' });
-      setIsPending(false);
-      setError(null);
+      // dispatch({ type: 'LOGOUT' });
+      // setIsPending(false);
+      // setError(null);
     } catch (err) {
-      // if (!isCancelled) {
-      //   setError(err && err.message ? err.message : 'Could not log out');
-      //   setIsPending(false);
-      // }
-      setError(err && err.message ? err.message : 'Could not log out');
-      setIsPending(false);
+      if (!isCancelled) {
+        setError(err && err.message ? err.message : 'Could not log out');
+        setIsPending(false);
+      }
+      // setError(err && err.message ? err.message : 'Could not log out');
+      // setIsPending(false);
     }
   };
-  // useEffect(() => {
-  //   return i() => setIsCancelled(true);
-  // }, [])
+  useEffect(() => {
+    return () => setIsCancelled(true);
+  }, []);
   return { logout, error, isPending };
 };
 

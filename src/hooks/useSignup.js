@@ -34,20 +34,28 @@ const useSignup = () => {
       setIsPending(false);
       setError(null);
     } catch (err) {
-      if (err?.message.includes(ERR_INVALID_EMAIL)) {
-        setError('The email address is badly formatted.');
-      } else {
-        setError(err.message);
+      if (!isCancelled) {
+        if (err?.message.includes(ERR_INVALID_EMAIL)) {
+          setError('The email address is badly formatted.');
+        } else {
+          setError(err.message);
+        }
+        setIsPending(false);
       }
 
-      setIsPending(false);
+      // if (err?.message.includes(ERR_INVALID_EMAIL)) {
+      //   setError('The email address is badly formatted.');
+      // } else {
+      //   setError(err.message);
+      // }
+      // setIsPending(false);
     }
   };
 
   // Cancels state change/signup process if user attemps to go to another route (page) while signup is in progress
-  // useEffect(() => {
-  //   return;
-  // }, []);
+  useEffect(() => {
+    return () => setIsCancelled(true);
+  }, []);
 
   return { signup, error, isPending };
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useReducer } from 'react';
 import {
   appFirestore,
   collection as fsCollection,
@@ -73,11 +73,11 @@ const useFirestore = collection => {
     try {
       const createdAt = timestamp;
       const addedDocument = await addDoc(collectionRef, { ...doc, createdAt });
-      dispatch({ type: 'ADDED_DOCUMENT', payload: addedDocument });
-      // dispatchIfNotCancelled({
-      //   type: 'ADDED_DOCUMENT',
-      //   payload: addedDocument,
-      // });
+      // dispatch({ type: 'ADDED_DOCUMENT', payload: addedDocument });
+      dispatchIfNotCancelled({
+        type: 'ADDED_DOCUMENT',
+        payload: addedDocument,
+      });
       setFsTransactionIsPending(false);
     } catch (err) {
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
@@ -111,11 +111,11 @@ const useFirestore = collection => {
       const { id, ...updateFields } = docToUpdate;
       const updatePayload = { ...updateFields, ...formattedFields, updatedAt };
       await updateDoc(docRef, updatePayload);
-      dispatch({ type: 'UPDATED_DOCUMENT', payload: updatePayload });
-      // dispatchIfNotCancelled({
-      //   type: 'UPDATED_DOCUMENT',
-      //   payload: updatedDocument,
-      // });
+      // dispatch({ type: 'UPDATED_DOCUMENT', payload: updatePayload });
+      dispatchIfNotCancelled({
+        type: 'UPDATED_DOCUMENT',
+        payload: updatedDocument,
+      });
       setFsTransactionIsPending(false);
     } catch (err) {
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
@@ -144,22 +144,21 @@ const useFirestore = collection => {
         }
       }
 
-      // dispatchIfNotCancelled({
-      //   type: 'DELETED_DOCUMENT',
-      // });
-
       // 2.) Delete the document itself.
       await deleteDoc(docRef);
-      dispatch({ type: 'DELETED_DOCUMENT' });
+      // dispatch({ type: 'DELETED_DOCUMENT' });
+      dispatchIfNotCancelled({
+        type: 'DELETED_DOCUMENT',
+      });
     } catch (err) {
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
       setFsTransactionIsPending(false);
     }
   };
 
-  // useEffect(() => {
-  //   return () => setIsCancelled(true);
-  // }, [])
+  useEffect(() => {
+    return () => setIsCancelled(true);
+  }, []);
 
   return {
     addDocument,
