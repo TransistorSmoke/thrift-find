@@ -1,6 +1,7 @@
 import './Inventory.scss';
 import { useState, useRef } from 'react';
 import ItemModal from '../ItemModal/ItemModal';
+import { calculateProfit } from '../../utilities/utilities';
 
 const Inventory = ({ items, uid }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -49,13 +50,11 @@ const Inventory = ({ items, uid }) => {
           <tbody>
             {items && items.length === 0 ? (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center' }}>
-                  No items found.
-                </td>
+                <td colSpan={7}>No items found.</td>
               </tr>
             ) : (
               items.map(item => (
-                <tr key={item.id}>
+                <tr key={item.id} className={item?.sellDate ? 'sold' : ''}>
                   <td className="item">
                     {item && item.name ? item.name : '-'}
                   </td>
@@ -72,9 +71,17 @@ const Inventory = ({ items, uid }) => {
                     {item && item.sellDate ? item.sellDate : '-'}
                   </td>
                   <td className="profit">
-                    {item && item.price && item.sellPrice
-                      ? (+item.sellPrice - +item.price).toFixed(2)
-                      : '-'}
+                    {item && item.price && item.sellPrice && item.sellDate ? (
+                      <span
+                        className={
+                          item.sellPrice - item.price > 0 ? 'gain' : 'loss'
+                        }
+                      >
+                        {calculateProfit(item.price, item.sellPrice)}
+                      </span>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td className="options">
                     <div className="icons-container">

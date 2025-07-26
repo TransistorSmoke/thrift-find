@@ -55,10 +55,17 @@
         padding: 8px 6px;
       }
 
-      tr:hover td {
-        background-color: white;
+      tr.sold > td {
+        background-color: rgba(109, 109, 109, 0.2);
       }
 
+      .gain {
+        color: #01ac01;
+      }
+
+      .loss {
+        color: $error-main;
+      }
       td:nth-child(n + 2) {
         text-align: center;
       }

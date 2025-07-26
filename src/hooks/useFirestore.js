@@ -133,8 +133,15 @@ const useFirestore = collection => {
 
       // 1.) Delete image first associated with the document.
       if (imgUrl) {
-        const imgRef = storageRef(storage, imgUrl);
-        await deleteObject(imgRef);
+        try {
+          const imgRef = storageRef(storage, imgUrl);
+          await deleteObject(imgRef);
+        } catch (err) {
+          console.error(
+            'Image ref in bucket not found. Image must have been deleted manually from the bucket. Still proceeding with deletion from the collection.'
+          );
+          console.error(err.message);
+        }
       }
 
       // dispatchIfNotCancelled({

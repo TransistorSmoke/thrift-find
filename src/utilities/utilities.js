@@ -37,15 +37,21 @@ export const deleteToastSettings = {
 };
 
 export const calculateProfit = (buy, sell) => {
-  return parseFloat(buy) && parseFloat(sell) ? sell - buy : '-';
+  let diff = parseFloat(sell) - parseFloat(buy);
+  let symbol = diff > 0 ? '\u23F6' : diff === 0 ? '' : '\u23F7';
+  return parseFloat(buy) && parseFloat(sell)
+    ? `${symbol} ${diff.toFixed(2)}`
+    : '';
 };
 
 /*
  * Gets either demo or prod collection depending on user
  * id - UID of user
  */
-export const getCollectionName = id =>
-  id === import.meta.env.VITE_PROD_USER_ID ? 'items' : 'items-demo';
+export const getCollectionName = (
+  id,
+  prodId = import.meta.env.VITE_PROD_USER_ID
+) => (id === prodId ? 'items' : 'items-demo');
 /*
  * Gets either demo or prod storage bucket depending on user
  * id - UID of user

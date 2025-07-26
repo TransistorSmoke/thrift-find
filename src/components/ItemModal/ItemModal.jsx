@@ -225,9 +225,9 @@ const ItemModal = forwardRef(({ item, uid, action }, ref) => {
         {isDelete ? (
           <>
             <button
-              className="delete"
+              className="app-button delete"
               onClick={deleteDoc}
-              disabled={isLoadingImage}
+              // disabled={isLoadingImage}
             >
               Delete
             </button>
@@ -235,15 +235,17 @@ const ItemModal = forwardRef(({ item, uid, action }, ref) => {
         ) : (
           <>
             <button
-              className={isEditing ? 'edit' : 'save'}
+              className={`app-button ${isEditing ? 'edit' : 'save'}`}
               onClick={isEditing ? save : edit}
-              disabled={isLoadingImage}
+              // disabled={isLoadingImage}
             >
               {isEditing ? 'Save' : 'Edit'}
             </button>
           </>
         )}
-        <button className="close">{isDelete ? 'Cancel' : 'Close'}</button>
+        <button className="app-button close">
+          {isDelete ? 'Cancel' : 'Close'}
+        </button>
       </form>
     </dialog>
   );
