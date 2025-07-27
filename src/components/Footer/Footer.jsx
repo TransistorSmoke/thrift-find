@@ -4,10 +4,8 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer-content">
-        <p>
-          &copy; {new Date().getFullYear()} Thrift Finds. All rights reserved.
-        </p>
-        <p>Created by Jason Alegado</p>
+        <p>Thrift Finds</p>
+        <p>Created by J. Alegado | July 2025</p>
       </div>
     </footer>
   );
