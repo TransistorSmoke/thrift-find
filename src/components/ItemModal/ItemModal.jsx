@@ -121,7 +121,6 @@ const ItemModal = forwardRef(({ item, uid, action }, ref) => {
             )}
           </h1>
         </div>
-        {console.log('currentImageUrl: ', currentImageUrl)}
         {currentImageUrl && (
           <img
             src={currentImageUrl}
