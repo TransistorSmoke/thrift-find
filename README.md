@@ -21,7 +21,7 @@ Thrift Find is my project that I use to record and track items that I buy and se
 - **React, bootstrap with Vite** - my goal was to try using more of React and Vite. Old school CRA was sunset, so Vite it was.
   - React hooks (useState, useReducer, useEffect, useRef, etc) and custom hooks, Context API
   
-- **SCSS** - This is my attempt to use the CSS modular architecture - started simple, but it works! And I am happy to have learned how to build it on my own.
+- **SCSS** - This is my attempt to use the CSS modular architecture - started simple, but it works! And I am happy to have learned how to build it on my own. I did not use a CSS framework for this.
   
 - **Firebase, Firestore and Storage** - for backend.
   - I created custom hooks to handle adding, updating, and deleting documents (items).
