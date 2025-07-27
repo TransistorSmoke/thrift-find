@@ -1,12 +1,31 @@
-# React + Vite
+# Thrift Find
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I go to thrift stores to find some good finds - used electronics, books, glassware and kids' toys. Some of these I resell, some I keep.
+Electronics were my best finds so far - I got very good deals for especially those that I could use for my computer and work! :)
 
-Currently, two official plugins are available:
+Thrift Find is my project that I use to record and track my inventory. These are the items that I post on online market place.
+I can set the original purchase price and date, and selling price and date, and upload an image of the. If it gets sold, a profit or loss price gets calculated.
+User can update details of the item, or delete it.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---------------------------------------------------
 
-## Expanding the ESLint configuration
+**TECH STACK**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React, bootstrap with Vite** - my goal was to try using more of React and Vite. Old school CRA was sunset, so Vite it was.
+  - React hooks (useState, useReducer, useEffect, useRef, etc) and custom hooks, Context API
+  
+- **SCSS** - This is my attempt to use the CSS modular architecture - started simple, but it works! And I am happy to have learned how to build it on my own.
+  
+- **Firebase, Firestore and Storage** - for backend.
+  - I created custom hooks to handle adding, updating, and deleting documents (items).
+  - Upload image (file) to Firebase Storage - added feature to compress image that exceed a certain file size
+  - Firebase and Storage rules set to allow restricted access and actions on documents and files
+ 
+---------------------------------------------------
+
+
+
+
+
+
+
