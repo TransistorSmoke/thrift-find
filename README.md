@@ -1,5 +1,11 @@
 # Thrift Find
 
+**DEMO**
+
+
+APP DEMO:     https://thrift-finds-d8f5a.web.app/login
+SOURCE CODE:  https://github.com/TransistorSmoke/thrift-find
+
 I go to thrift stores to find some good finds - used electronics, books, glassware and kids' toys. Some of these I resell, some I keep.
 Electronics were my best finds so far - I got very good deals for especially those that I could use for my computer and work! :)
 
@@ -20,8 +26,8 @@ User can update details of the item, or delete it.
   - I created custom hooks to handle adding, updating, and deleting documents (items).
   - Upload image (file) to Firebase Storage - added feature to compress image that exceed a certain file size
   - Firebase and Storage rules set to allow restricted access and actions on documents and files
- 
----------------------------------------------------
+  - New user signup, login, logout, and forgot password handling
+
 
 
 
