@@ -12,7 +12,7 @@
 Thrift stores always have good finds - used electronics, books, glassware and kids' toys. Some of these I resell, some I keep.
 Electronics were my best items so far - I got awesome deals for especially those that I could use for my computer and work! :)
 
-Thrift Find is my project that I use to record and track items that I buy and sell. I can set the original purchase price and date, and selling price and date, and upload an image of the. If it gets sold, a profit or loss price gets calculated. I can also update details of the item, or delete it.
+Thrift Find is my project that I use to record and track items that I buy and sell. I can set the original purchase price and date, and selling price and date, and upload an image of the item. If it gets sold, a profit or loss price gets calculated. I can also update details of the item, or delete it.
 
 ---------------------------------------------------
 
