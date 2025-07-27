@@ -2,17 +2,17 @@
 
 **DEMO**
 
+<img width="1500" height="442" alt="Screenshot 2025-07-27 at 12 08 40 pm" src="https://github.com/user-attachments/assets/8ad1fee8-6583-4bda-b6ad-88f88b6aa61e" />
+<img width="1500" height="403" alt="Screenshot 2025-07-27 at 12 13 57 pm" src="https://github.com/user-attachments/assets/8f92a45e-efac-42e0-984d-942fe2aace46" />
 
-APP DEMO:     https://thrift-finds-d8f5a.web.app/login
+**URL:         **https://thrift-finds-d8f5a.web.app/login
 
-SOURCE CODE:  https://github.com/TransistorSmoke/thrift-find
+**SOURCE CODE: **https://github.com/TransistorSmoke/thrift-find
 
-I go to thrift stores to find some good finds - used electronics, books, glassware and kids' toys. Some of these I resell, some I keep.
-Electronics were my best finds so far - I got very good deals for especially those that I could use for my computer and work! :)
+Thrift stores always have good finds - used electronics, books, glassware and kids' toys. Some of these I resell, some I keep.
+Electronics were my best items so far - I got awesome deals for especially those that I could use for my computer and work! :)
 
-Thrift Find is my project that I use to record and track my inventory. These are the items that I post on online market place.
-I can set the original purchase price and date, and selling price and date, and upload an image of the. If it gets sold, a profit or loss price gets calculated.
-User can update details of the item, or delete it.
+Thrift Find is my project that I use to record and track items that I buy and sell. I can set the original purchase price and date, and selling price and date, and upload an image of the. If it gets sold, a profit or loss price gets calculated. I can also update details of the item, or delete it.
 
 ---------------------------------------------------
 
