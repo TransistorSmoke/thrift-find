@@ -121,6 +121,7 @@ const ItemModal = forwardRef(({ item, uid, action }, ref) => {
             )}
           </h1>
         </div>
+        {console.log('currentImageUrl: ', currentImageUrl)}
         {currentImageUrl && (
           <img
             src={currentImageUrl}
@@ -131,7 +132,6 @@ const ItemModal = forwardRef(({ item, uid, action }, ref) => {
           />
         )}
         {isLoadingImage && <img src={LoadingImage} className="loading" />}
-
         <div className="item-details">
           <div className="item-price">
             <span>Purchasing Price (AUD): </span>

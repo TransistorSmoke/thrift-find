@@ -66,7 +66,7 @@ const Form = ({ uid, collection }) => {
         clearAll();
       } catch (err) {
         toast.error('Failed to add item', settings);
-        setError('Faile to add item');
+        setError('Failed to add item');
       }
 
       setAddDocIsPending(false);
